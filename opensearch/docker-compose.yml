@@ -1,0 +1,29 @@
+services:
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    container_name: opensearch
+    environment:
+      - discovery.type=single-node
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=MyStrongPassword123!
+      - plugins.security.disabled=true
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+
+  dashboards:
+    image: opensearchproject/opensearch-dashboards:latest
+    container_name: dashboards
+    environment:
+      - OPENSEARCH_HOSTS=["http://opensearch:9200"]
+    ports:
+      - "5601:5601"
+
+  opensearch-seed:
+    image: curlimages/curl:latest
+    depends_on:
+      - opensearch
+    volumes:
+      - ./seed:/seed
+    entrypoint: ["/bin/sh", "/seed/seed.sh"]
