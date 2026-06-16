@@ -6,6 +6,7 @@ services:
       - discovery.type=single-node
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=MyStrongPassword123!
       - plugins.security.disabled=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
     ports:
       - "9200:9200"
       - "9600:9600"
@@ -15,6 +16,8 @@ services:
   dashboards:
     image: opensearchproject/opensearch-dashboards:latest
     container_name: dashboards
+    depends_on:
+      - opensearch
     environment:
       - OPENSEARCH_HOSTS=["http://opensearch:9200"]
     ports:
@@ -26,4 +29,7 @@ services:
       - opensearch
     volumes:
       - ./seed:/seed
-    entrypoint: ["/bin/sh", "/seed/seed.sh"]
+    entrypoint: ["/bin/sh", "/seed/local_seed.sh"]
+
+volumes:
+  opensearch-data:

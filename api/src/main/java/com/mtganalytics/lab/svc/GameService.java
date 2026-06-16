@@ -1,48 +1,56 @@
 package com.mtganalytics.lab.svc;
 
 import java.io.IOException;
-import java.time.Instant;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch._types.Result;
+import org.opensearch.client.opensearch.core.GetResponse;
 import org.opensearch.client.opensearch.core.IndexResponse;
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
-import com.mtganalytics.lab.model.CreatedGameEntry;
-import com.mtganalytics.lab.model.GameEntry;
+import com.mtganalytics.lab.model.StoredGameEntryReference;
+import com.mtganalytics.lab.exception.GameEntryNotFoundException;
+import com.mtganalytics.lab.exception.GameEntryRecordFailureException;
+import com.mtganalytics.lab.exception.GameServiceException;
+import com.mtganalytics.lab.model.GameEntryDocument;
+import com.mtganalytics.lab.model.GameEntryRequest;
 import com.mtganalytics.lab.model.GameEntryRecord;
 
 import lombok.Data;
 
 @Service
 @Data
-@ConfigurationProperties(prefix = "gameServiece")
+@ConfigurationProperties(prefix = "game-service")
 public class GameService {
 
     private final OpenSearchClient openSearchClient;
 
     private String mtgGameEntriesIndexName;
 
-    public GameEntry getGameEntryById(Integer id) {
-        // Placeholder implementation
-        GameEntry gameEntry = new GameEntry();
-        gameEntry.setPlayer("John Doe");
-        gameEntry.setCommander("Atraxa, Praetors' Voice");
-        gameEntry.setColorIdentity("Green, White, Blue, Black");
-        gameEntry.setResult("Win");
-        gameEntry.setNumberOfTurnsPlayed(10);
-        return gameEntry;
+    public GameEntryRecord getGameEntryById(String id) {
+        try {
+            GetResponse<GameEntryDocument> response = openSearchClient.get(
+                    g -> g.index(mtgGameEntriesIndexName).id(id),
+                    GameEntryDocument.class);
+            if (!response.found()) {
+                throw new GameEntryNotFoundException(id);
+            }
+            // stored game entry with Id from opensearch
+            GameEntryRecord result = new GameEntryRecord(response.id(), response.source());
+
+            return result;
+
+        } catch (IOException e) {
+            throw new GameServiceException("Error retrieving game entry by ID: " + id, e);
+
+        }
     }
 
-    public CreatedGameEntry createGameEntry(GameEntry gameEntryRequest) throws IOException {
+    public StoredGameEntryReference createGameEntry(GameEntryRequest gameEntryRequest) throws IOException {
 
-        GameEntryRecord record = new GameEntryRecord();
-
-        BeanUtils.copyProperties(gameEntryRequest, record);
-
-        record.setCreatedAt(Instant.now());
+        GameEntryDocument record = new GameEntryDocument(gameEntryRequest);
 
         try {
             IndexResponse response = openSearchClient.index(i -> i
@@ -51,16 +59,16 @@ public class GameService {
                     .document(record));
 
             if (response.result() != Result.Created) {
-                throw new RuntimeException(
+                throw new GameEntryRecordFailureException(
                         "Unexpected index result: " + response.result());
             }
 
-            return new CreatedGameEntry(
+            return new StoredGameEntryReference(
                     response.id(),
                     record.getCreatedAt());
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new GameEntryRecordFailureException(e.getMessage());
         }
     }
 }

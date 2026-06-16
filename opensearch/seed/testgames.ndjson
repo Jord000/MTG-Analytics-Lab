@@ -1,0 +1,8 @@
+{ "index": { "_id": "550e8400-e29b-41d4-a716-446655440000" } }
+{ "createdAt":"2026-06-11T12:00:00Z","player":"Jordan","commander":"Jodah Archmage Eternal","colorIdentity":"Green, White, Blue, Black, Red","result":"Win","numberOfTurnsPlayed":10 }
+
+{ "index": { "_id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8" } }
+{ "createdAt":"2026-06-11T13:00:00Z","player":"Chris","commander":"Feldon of the Third Path","colorIdentity":"Red","result":"Win","numberOfTurnsPlayed":12 }
+
+{ "index": { "_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479" } }
+{ "createdAt":"2026-06-11T14:00:00Z","player":"Karl","commander":"Hapatra, Vizier of poisons","colorIdentity":"Black, Green","result":"Win","numberOfTurnsPlayed":11 }

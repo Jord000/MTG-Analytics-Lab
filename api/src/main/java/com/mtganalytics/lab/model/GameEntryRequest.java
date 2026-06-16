@@ -3,7 +3,7 @@ package com.mtganalytics.lab.model;
 import lombok.Data;
 
 @Data
-public class GameEntry {
+public class GameEntryRequest {
     String player;
     String commander;
     String colorIdentity;

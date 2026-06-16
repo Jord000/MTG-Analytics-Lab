@@ -9,6 +9,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import lombok.Data;
+
+@Data
 @Configuration
 @ConfigurationProperties(prefix = "opensearch")
 public class OpensearchConfig {
@@ -19,11 +26,16 @@ public class OpensearchConfig {
 
     @Bean
     public OpenSearchClient openSearchClient() {
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
         HttpHost httpHost = new HttpHost(scheme, host, port);
 
         OpenSearchTransport transport = ApacheHttpClient5TransportBuilder
                 .builder(httpHost)
-                .setMapper(new JacksonJsonpMapper())
+                .setMapper(new JacksonJsonpMapper(mapper))
                 .build();
 
         return new OpenSearchClient(transport);
