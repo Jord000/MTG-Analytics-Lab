@@ -1,22 +1,25 @@
 package com.mtganalytics.lab.svc;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch._types.Result;
+import org.opensearch.client.opensearch._types.SortOrder;
 import org.opensearch.client.opensearch.core.GetResponse;
 import org.opensearch.client.opensearch.core.IndexResponse;
-
+import org.opensearch.client.opensearch.core.SearchResponse;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
-import com.mtganalytics.lab.model.StoredGameEntryReference;
 import com.mtganalytics.lab.exception.GameEntryNotFoundException;
 import com.mtganalytics.lab.exception.GameEntryRecordFailureException;
 import com.mtganalytics.lab.exception.GameServiceException;
 import com.mtganalytics.lab.model.GameEntryDocument;
-import com.mtganalytics.lab.model.GameEntryRequest;
 import com.mtganalytics.lab.model.GameEntryRecord;
+import com.mtganalytics.lab.model.GameEntryRequest;
+import com.mtganalytics.lab.model.StoredGameEntryReference;
 
 import lombok.Data;
 
@@ -28,8 +31,9 @@ public class GameService {
     private final OpenSearchClient openSearchClient;
 
     private String mtgGameEntriesIndexName;
+    private Integer mostRecentEntryAmount;
 
-    public GameEntryRecord getGameEntryById(String id) {
+    public GameEntryRecord getGameEntryById(String id) throws GameEntryNotFoundException, GameServiceException {
         try {
             GetResponse<GameEntryDocument> response = openSearchClient.get(
                     g -> g.index(mtgGameEntriesIndexName).id(id),
@@ -48,7 +52,8 @@ public class GameService {
         }
     }
 
-    public StoredGameEntryReference createGameEntry(GameEntryRequest gameEntryRequest) throws IOException {
+    public StoredGameEntryReference createGameEntry(GameEntryRequest gameEntryRequest)
+            throws IOException, GameEntryRecordFailureException {
 
         GameEntryDocument record = new GameEntryDocument(gameEntryRequest);
 
@@ -69,6 +74,28 @@ public class GameService {
 
         } catch (IOException e) {
             throw new GameEntryRecordFailureException(e.getMessage());
+        }
+    }
+
+    public List<GameEntryRecord> getMostRecentGameEntries() throws IOException, GameEntryNotFoundException {
+        try {
+            SearchResponse<GameEntryDocument> response = openSearchClient.search(s -> s
+                    .index(mtgGameEntriesIndexName)
+                    .query(q -> q.matchAll(m -> m))
+                    .sort(so -> so.field(f -> f.field("createdAt").order(SortOrder.Desc)))
+                    .size(mostRecentEntryAmount),
+                    GameEntryDocument.class);
+
+            if (response.hits().hits().isEmpty()) {
+                throw new GameEntryNotFoundException("No results found for most recent game entries");
+            }
+
+            return response.hits().hits().stream()
+                    .map(hit -> new GameEntryRecord(hit.id(), hit.source()))
+                    .collect(Collectors.toList());
+
+        } catch (IOException e) {
+            throw new GameServiceException("Error retrieving most recent game entries", e);
         }
     }
 }
