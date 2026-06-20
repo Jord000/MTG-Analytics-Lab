@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mtganalytics.lab.exception.GameEntryNotFoundException;
@@ -49,10 +50,14 @@ public class MalRestController {
     return ResponseEntity.ok(gameEntry);
   }
 
-  @GetMapping("/game_entry/player/{playerName}")
-  public ResponseEntity<List<GameEntryDocument>> getGameEntryByPlayerName(@PathVariable String playerName)
-      throws IOException, GameEntryNotFoundException {
-    List<GameEntryDocument> gameEntries = gameQueryService.getGameEntryByPlayerName(playerName);
+  @GetMapping("/game_entry")
+  public ResponseEntity<List<GameEntryDocument>> getGameEntries(
+      @RequestParam(required = false) String player,
+      @RequestParam(required = false) Boolean win,
+      @RequestParam(required = false) String commander) throws IOException {
+
+    List<GameEntryDocument> gameEntries = gameQueryService.getGameEntries(player, win, commander);
+
     return ResponseEntity.ok(gameEntries);
   }
 

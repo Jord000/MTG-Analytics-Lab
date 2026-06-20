@@ -1,11 +1,15 @@
 package com.mtganalytics.lab.svc;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch._types.FieldValue;
 import org.opensearch.client.opensearch._types.SortOrder;
+import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
+import org.opensearch.client.opensearch._types.query_dsl.Query;
 import org.opensearch.client.opensearch.core.GetResponse;
 import org.opensearch.client.opensearch.core.SearchResponse;
 import org.opensearch.client.opensearch.core.search.Hit;
@@ -48,27 +52,28 @@ public class GameQueryService {
         }
     }
 
-    public List<GameEntryDocument> getGameEntryByPlayerName(String playerName)
-            throws IOException, GameEntryNotFoundException {
+    public List<GameEntryDocument> getGameEntries(
+            String playerName,
+            Boolean win,
+            String commander) throws IOException {
+
         try {
+            BoolQuery boolQuery = buildBoolQuery(playerName, win, commander);
+
             SearchResponse<GameEntryDocument> response = openSearchClient.search(
-                    s -> s
-                            .index(mtgGameEntriesIndexName)
-                            .query(q -> q
-                                    .match(m -> m
-                                            .field("player")
-                                            .query(v -> v.stringValue(playerName)))),
+                    s -> s.index(mtgGameEntriesIndexName)
+                            .query(q -> q.bool(boolQuery)),
                     GameEntryDocument.class);
 
-            List<GameEntryDocument> results = response.hits().hits().stream()
+            return response.hits().hits().stream()
                     .map(Hit::source)
                     .toList();
 
-            return results;
-
         } catch (IOException e) {
-            throw new GameServiceException("Error retrieving game entry by ID: " + playerName, e);
-
+            throw new GameServiceException(
+                    "Error retrieving game entries with filters: playerName="
+                            + playerName + ", win=" + win + ", commander=" + commander,
+                    e);
         }
     }
 
@@ -92,6 +97,37 @@ public class GameQueryService {
         } catch (IOException e) {
             throw new GameServiceException("Error retrieving most recent game entries", e);
         }
+    }
+
+    private BoolQuery buildBoolQuery(String playerName, Boolean win, String commander) {
+
+        List<Query> mustClauses = new ArrayList<>();
+
+        if (playerName != null && !playerName.isBlank()) {
+            mustClauses.add(match("player", playerName));
+        }
+
+        if (win != null) {
+            mustClauses.add(term("win", win));
+        }
+
+        if (commander != null && !commander.isBlank()) {
+            mustClauses.add(match("commander", commander));
+        }
+
+        return BoolQuery.of(b -> b.must(mustClauses));
+    }
+
+    private Query match(String field, String value) {
+        return Query.of(q -> q.match(m -> m
+                .field(field)
+                .query(FieldValue.of(value))));
+    }
+
+    private Query term(String field, Boolean value) {
+        return Query.of(q -> q.term(t -> t
+                .field(field)
+                .value(FieldValue.of(value))));
     }
 
 }

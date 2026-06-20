@@ -7,6 +7,6 @@ public class GameEntryRequest {
     String player;
     String commander;
     String colorIdentity;
-    String result;
+    Boolean win;
     Integer numberOfTurnsPlayed;
 }

@@ -11,7 +11,7 @@ public class GameEntryDocument {
     String player;
     String commander;
     String colorIdentity;
-    String result;
+    Boolean win;
     Integer numberOfTurnsPlayed;
     Instant createdAt;
 
@@ -19,7 +19,7 @@ public class GameEntryDocument {
         this.player = request.getPlayer();
         this.commander = request.getCommander();
         this.colorIdentity = request.getColorIdentity();
-        this.result = request.getResult();
+        this.win = request.getWin();
         this.numberOfTurnsPlayed = request.getNumberOfTurnsPlayed();
         this.createdAt = Instant.now();
     }

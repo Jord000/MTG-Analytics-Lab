@@ -13,7 +13,7 @@ public class GameEntryRecord {
     private String player;
     private String commander;
     private String colorIdentity;
-    private String result;
+    private Boolean win;
     private Integer numberOfTurnsPlayed;
     private Instant createdAt;
 
@@ -22,7 +22,7 @@ public class GameEntryRecord {
         this.setPlayer(source.getPlayer());
         this.setCommander(source.getCommander());
         this.setColorIdentity(source.getColorIdentity());
-        this.setResult(source.getResult());
+        this.setWin(source.getWin());
         this.setNumberOfTurnsPlayed(source.getNumberOfTurnsPlayed());
         this.setCreatedAt(source.getCreatedAt());
     }
