@@ -2,7 +2,9 @@ package com.mtganalytics.lab.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
+import org.opensearch.client.opensearch._types.mapping.Property;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mtganalytics.lab.exception.GameEntryNotFoundException;
 import com.mtganalytics.lab.exception.GameEntryRecordFailureException;
+import com.mtganalytics.lab.model.GameEntryDocument;
 import com.mtganalytics.lab.model.GameEntryRecord;
 import com.mtganalytics.lab.model.GameEntryRequest;
 import com.mtganalytics.lab.model.StoredGameEntryReference;
-import com.mtganalytics.lab.svc.GameService;
+import com.mtganalytics.lab.svc.GameCommandService;
+import com.mtganalytics.lab.svc.GameQueryService;
+import com.mtganalytics.lab.svc.IndexService;
 
 import lombok.Data;
 
@@ -23,31 +28,45 @@ import lombok.Data;
 @Data
 public class MalRestController {
 
-  private final GameService gameService;
+  private final GameQueryService gameQueryService;
+  private final GameCommandService gameCommandService;
+  private final IndexService indexService;
 
   @GetMapping("/")
   public ResponseEntity<String> healthCheck() {
     return ResponseEntity.ok("API is up and running!");
   }
 
-  @GetMapping("/game_entry/{id}")
+  @GetMapping("/index_mapping")
+  public ResponseEntity<Map<String, Property>> getIndexMapping() throws IOException {
+    return ResponseEntity.ok(indexService.getIndexMapping());
+  }
+
+  @GetMapping("/game_entry/id/{id}")
   public ResponseEntity<GameEntryRecord> getGameEntryById(@PathVariable String id)
       throws IOException, GameEntryNotFoundException {
-    GameEntryRecord gameEntry = gameService.getGameEntryById(id);
+    GameEntryRecord gameEntry = gameQueryService.getGameEntryById(id);
     return ResponseEntity.ok(gameEntry);
+  }
+
+  @GetMapping("/game_entry/player/{playerName}")
+  public ResponseEntity<List<GameEntryDocument>> getGameEntryByPlayerName(@PathVariable String playerName)
+      throws IOException, GameEntryNotFoundException {
+    List<GameEntryDocument> gameEntries = gameQueryService.getGameEntryByPlayerName(playerName);
+    return ResponseEntity.ok(gameEntries);
   }
 
   @GetMapping("/game_entry_most_recent")
   public ResponseEntity<List<GameEntryRecord>> getMostRecentGameEntries()
       throws IOException, GameEntryNotFoundException {
-    List<GameEntryRecord> gameEntries = gameService.getMostRecentGameEntries();
+    List<GameEntryRecord> gameEntries = gameQueryService.getMostRecentGameEntries();
     return ResponseEntity.ok(gameEntries);
   }
 
   @PostMapping("/game_entry")
   public ResponseEntity<StoredGameEntryReference> postGameEntry(@RequestBody GameEntryRequest gameEntryRequest)
       throws IOException, GameEntryRecordFailureException {
-    StoredGameEntryReference createdGameEntry = gameService.createGameEntry(gameEntryRequest);
+    StoredGameEntryReference createdGameEntry = gameCommandService.createGameEntry(gameEntryRequest);
     return ResponseEntity.status(201).body(createdGameEntry);
   }
 
