@@ -56,12 +56,13 @@ public class GameQueryService {
             String playerName,
             Boolean win,
             String commander,
-            String colorIdentity, String colorContains) throws IOException {
+            String colorIdentity, String colorContains, Integer minTurns,
+            Integer maxTurns) throws IOException {
 
         try {
             String standardColorIdentity = GameUtils.standardiseColorIdentity(colorIdentity);
             BoolQuery boolQuery = buildBoolQuery(playerName, win, commander, standardColorIdentity,
-                    colorContains);
+                    colorContains, minTurns, maxTurns);
 
             SearchResponse<GameEntryDocument> response = openSearchClient.search(
                     s -> s.index(mtgGameEntriesIndexName)
@@ -108,7 +109,9 @@ public class GameQueryService {
             Boolean win,
             String commander,
             String colorIdentity,
-            String colorContains) {
+            String colorContains,
+            Integer minTurns,
+            Integer maxTurns) {
 
         List<Query> mustClauses = new ArrayList<>();
         List<Query> filterClauses = new ArrayList<>();
@@ -131,6 +134,10 @@ public class GameQueryService {
 
         if (colorContains != null && !colorContains.isBlank()) {
             filterClauses.add(GameUtils.wildcard("colorIdentity", "*" + colorContains + "*"));
+        }
+
+        if (minTurns != null || maxTurns != null) {
+            filterClauses.add(GameUtils.range("numberOfTurnsPlayed", minTurns, maxTurns));
         }
 
         return BoolQuery.of(b -> b.must(mustClauses).filter(filterClauses));

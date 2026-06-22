@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch._types.FieldValue;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
 
@@ -45,5 +46,21 @@ public class GameUtils {
                 .sorted(Comparator.comparingInt(MTG_COLOR_ORDER::indexOf))
                 .map(String::valueOf)
                 .collect(Collectors.joining());
+    }
+
+    public static Query range(String field, Integer min, Integer max) {
+        return Query.of(q -> q.range(range -> {
+            range.field(field);
+
+            if (min != null) {
+                range.gte(JsonData.of(min));
+            }
+
+            if (max != null) {
+                range.lte(JsonData.of(max));
+            }
+
+            return range;
+        }));
     }
 }
