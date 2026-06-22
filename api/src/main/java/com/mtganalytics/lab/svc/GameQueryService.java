@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
-import org.opensearch.client.opensearch._types.FieldValue;
 import org.opensearch.client.opensearch._types.SortOrder;
 import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
@@ -20,6 +19,7 @@ import com.mtganalytics.lab.exception.GameEntryNotFoundException;
 import com.mtganalytics.lab.exception.GameServiceException;
 import com.mtganalytics.lab.model.GameEntryDocument;
 import com.mtganalytics.lab.model.GameEntryRecord;
+import com.mtganalytics.lab.utils.GameUtils;
 
 import lombok.Data;
 
@@ -55,10 +55,13 @@ public class GameQueryService {
     public List<GameEntryDocument> getGameEntries(
             String playerName,
             Boolean win,
-            String commander) throws IOException {
+            String commander,
+            String colorIdentity, String colorContains) throws IOException {
 
         try {
-            BoolQuery boolQuery = buildBoolQuery(playerName, win, commander);
+            String standardColorIdentity = GameUtils.standardiseColorIdentity(colorIdentity);
+            BoolQuery boolQuery = buildBoolQuery(playerName, win, commander, standardColorIdentity,
+                    colorContains);
 
             SearchResponse<GameEntryDocument> response = openSearchClient.search(
                     s -> s.index(mtgGameEntriesIndexName)
@@ -72,7 +75,8 @@ public class GameQueryService {
         } catch (IOException e) {
             throw new GameServiceException(
                     "Error retrieving game entries with filters: playerName="
-                            + playerName + ", win=" + win + ", commander=" + commander,
+                            + playerName + ", win=" + win + ", commander=" + commander + ", colorIdentity="
+                            + colorIdentity,
                     e);
         }
     }
@@ -99,35 +103,37 @@ public class GameQueryService {
         }
     }
 
-    private BoolQuery buildBoolQuery(String playerName, Boolean win, String commander) {
+    private BoolQuery buildBoolQuery(
+            String playerName,
+            Boolean win,
+            String commander,
+            String colorIdentity,
+            String colorContains) {
 
         List<Query> mustClauses = new ArrayList<>();
+        List<Query> filterClauses = new ArrayList<>();
 
         if (playerName != null && !playerName.isBlank()) {
-            mustClauses.add(match("player", playerName));
+            mustClauses.add(GameUtils.match("player", playerName));
         }
 
         if (win != null) {
-            mustClauses.add(term("win", win));
+            mustClauses.add(GameUtils.term("win", win));
         }
 
         if (commander != null && !commander.isBlank()) {
-            mustClauses.add(match("commander", commander));
+            mustClauses.add(GameUtils.match("commander", commander));
         }
 
-        return BoolQuery.of(b -> b.must(mustClauses));
-    }
+        if (colorIdentity != null && !colorIdentity.isBlank()) {
+            filterClauses.add(GameUtils.term("colorIdentity", colorIdentity));
+        }
 
-    private Query match(String field, String value) {
-        return Query.of(q -> q.match(m -> m
-                .field(field)
-                .query(FieldValue.of(value))));
-    }
+        if (colorContains != null && !colorContains.isBlank()) {
+            filterClauses.add(GameUtils.wildcard("colorIdentity", "*" + colorContains + "*"));
+        }
 
-    private Query term(String field, Boolean value) {
-        return Query.of(q -> q.term(t -> t
-                .field(field)
-                .value(FieldValue.of(value))));
+        return BoolQuery.of(b -> b.must(mustClauses).filter(filterClauses));
     }
 
 }

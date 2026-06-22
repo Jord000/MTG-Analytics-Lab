@@ -54,9 +54,12 @@ public class MalRestController {
   public ResponseEntity<List<GameEntryDocument>> getGameEntries(
       @RequestParam(required = false) String player,
       @RequestParam(required = false) Boolean win,
-      @RequestParam(required = false) String commander) throws IOException {
+      @RequestParam(required = false) String commander,
+      @RequestParam(required = false) String colorIdentity,
+      @RequestParam(required = false) String colorContains) throws IOException {
 
-    List<GameEntryDocument> gameEntries = gameQueryService.getGameEntries(player, win, commander);
+    List<GameEntryDocument> gameEntries = gameQueryService.getGameEntries(player, win, commander, colorIdentity,
+        colorContains);
 
     return ResponseEntity.ok(gameEntries);
   }

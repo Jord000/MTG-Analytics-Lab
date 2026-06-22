@@ -12,6 +12,7 @@ import com.mtganalytics.lab.exception.GameEntryRecordFailureException;
 import com.mtganalytics.lab.model.GameEntryDocument;
 import com.mtganalytics.lab.model.GameEntryRequest;
 import com.mtganalytics.lab.model.StoredGameEntryReference;
+import com.mtganalytics.lab.utils.GameUtils;
 
 import lombok.Data;
 
@@ -29,6 +30,7 @@ public class GameCommandService {
             throws IOException, GameEntryRecordFailureException {
 
         GameEntryDocument record = new GameEntryDocument(gameEntryRequest);
+        record.setColorIdentity(GameUtils.standardiseColorIdentity(record.getColorIdentity()));
 
         try {
             IndexResponse response = openSearchClient.index(i -> i

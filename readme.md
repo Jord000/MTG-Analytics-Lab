@@ -17,13 +17,21 @@ run springboot
 
 make a get call via powershell
 `Invoke-RestMethod -Uri "http://localhost:8080/"`
-`curl http://localhost:8080`
+`curl "http://localhost:8080"`
 
 run local opensearch instance
 `docker compose up -d`
 
-make a post to the game entry index via the api
+Useful GET's and POST's using Powershell
 
 ```
-curl.exe -i -X POST http://localhost:8080/game_entry -H "Content-Type: application/json" -d "{\"player\":\"Alice\",\"commander\":\"Atraxa, Praetors' Voice\",\"colorIdentity\":\"Green, White, Blue, Black\",\"result\":\"Win\",\"numberOfTurnsPlayed\":10}"
+curl.exe --% -i -X POST http://localhost:8080/game_entry -H "Content-Type: application/json" -d "{\"player\":\"Alice\",\"commander\":\"Atraxa, Praetors' Voice\",\"colorIdentity\":\"WBUG\",\"win\":true,\"numberOfTurnsPlayed\":10}"
+```
+
+```
+curl.exe -i "http://localhost:8080/game_entry?player=Alice&commander=Atraxa%2C%20Praetors'%20Voice&colorIdentity=G&colorIdentity=WUBG"
+```
+
+```
+curl.exe -i "http://localhost:8080/game_entry?player=Jordan&colorIdentity=G"
 ```
