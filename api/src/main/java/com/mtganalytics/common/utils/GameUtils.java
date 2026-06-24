@@ -1,4 +1,4 @@
-package com.mtganalytics.lab.utils;
+package com.mtganalytics.common.utils;
 
 import java.util.Comparator;
 import java.util.List;

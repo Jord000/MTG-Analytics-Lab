@@ -1,4 +1,4 @@
-package com.mtganalytics.lab.model;
+package com.mtganalytics.game.model;
 
 import lombok.Data;
 

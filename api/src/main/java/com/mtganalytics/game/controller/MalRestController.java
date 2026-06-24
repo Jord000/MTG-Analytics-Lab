@@ -1,4 +1,4 @@
-package com.mtganalytics.lab.controller;
+package com.mtganalytics.game.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mtganalytics.lab.exception.GameEntryNotFoundException;
-import com.mtganalytics.lab.exception.GameEntryRecordFailureException;
-import com.mtganalytics.lab.model.GameEntryDocument;
-import com.mtganalytics.lab.model.GameEntryRecord;
-import com.mtganalytics.lab.model.GameEntryRequest;
-import com.mtganalytics.lab.model.StoredGameEntryReference;
-import com.mtganalytics.lab.svc.GameCommandService;
-import com.mtganalytics.lab.svc.GameQueryService;
-import com.mtganalytics.lab.svc.IndexService;
+import com.mtganalytics.common.exception.GameEntryNotFoundException;
+import com.mtganalytics.common.exception.GameEntryRecordFailureException;
+import com.mtganalytics.game.model.GameEntryDocument;
+import com.mtganalytics.game.model.GameEntryRecord;
+import com.mtganalytics.game.model.GameEntryRequest;
+import com.mtganalytics.game.model.StoredGameEntryReference;
+import com.mtganalytics.game.svc.GameCommandService;
+import com.mtganalytics.game.svc.GameQueryService;
+import com.mtganalytics.game.svc.IndexService;
 
 import lombok.Data;
 

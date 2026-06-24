@@ -1,4 +1,4 @@
-package com.mtganalytics.lab.svc;
+package com.mtganalytics.game.svc;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,11 +15,11 @@ import org.opensearch.client.opensearch.core.search.Hit;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
-import com.mtganalytics.lab.exception.GameEntryNotFoundException;
-import com.mtganalytics.lab.exception.GameServiceException;
-import com.mtganalytics.lab.model.GameEntryDocument;
-import com.mtganalytics.lab.model.GameEntryRecord;
-import com.mtganalytics.lab.utils.GameUtils;
+import com.mtganalytics.common.exception.GameEntryNotFoundException;
+import com.mtganalytics.common.exception.GameServiceException;
+import com.mtganalytics.common.utils.GameUtils;
+import com.mtganalytics.game.model.GameEntryDocument;
+import com.mtganalytics.game.model.GameEntryRecord;
 
 import lombok.Data;
 

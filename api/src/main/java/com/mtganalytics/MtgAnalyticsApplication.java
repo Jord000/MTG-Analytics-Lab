@@ -1,13 +1,13 @@
-package com.mtganalytics.lab;
+package com.mtganalytics;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LabApiApplication {
+public class MtgAnalyticsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LabApiApplication.class, args);
+		SpringApplication.run(MtgAnalyticsApplication.class, args);
 	}
 
 }
