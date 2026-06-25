@@ -27,7 +27,7 @@ import lombok.Data;
 
 @RestController
 @Data
-public class MalRestController {
+public class GameRestController {
 
   private final GameQueryService gameQueryService;
   private final GameCommandService gameCommandService;
