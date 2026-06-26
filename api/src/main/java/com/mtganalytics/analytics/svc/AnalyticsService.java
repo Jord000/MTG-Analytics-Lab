@@ -7,8 +7,6 @@ import java.util.List;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch._types.FieldValue;
 import org.opensearch.client.opensearch._types.OpenSearchException;
-import org.opensearch.client.opensearch._types.aggregations.Aggregate;
-import org.opensearch.client.opensearch._types.aggregations.StringTermsAggregate;
 import org.opensearch.client.opensearch._types.aggregations.StringTermsBucket;
 import org.opensearch.client.opensearch.core.SearchResponse;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -28,60 +26,118 @@ public class AnalyticsService {
 
     private final OpenSearchClient openSearchClient;
 
-    public List<CommanderStats> getCommanderAnalytics() throws AnalyticsException {
+    public List<CommanderStats> getCommanderAnalytics(String commanderName) throws AnalyticsException {
 
         try {
-            SearchResponse<Void> response = openSearchClient.search(s -> s
-                    .index(mtgGameEntriesIndexName)
-                    .size(0)
-                    .aggregations("commanders", a -> a
-                            .terms(t -> t
-                                    .field("commander.keyword")
-                                    .size(100))
-                            .aggregations("wins", agg -> agg
-                                    .filter(f -> f
-                                            .term(t -> t
-                                                    .field("win")
-                                                    .value(FieldValue
-                                                            .of(true)))))
-                            .aggregations("avg_turns", agg -> agg
-                                    .avg(avg -> avg
-                                            .field("numberOfTurnsPlayed")))),
-                    Void.class);
 
-            StringTermsAggregate commanders = response.aggregations()
-                    .get("commanders")
-                    .sterms();
+            if (commanderName != null && !commanderName.isBlank()) {
 
-            List<CommanderStats> statsList = new ArrayList<>();
+                // Aggregate stats for fuzzy-matched commanders in a single query
+                SearchResponse<Void> response = openSearchClient.search(s -> s
+                        .index(mtgGameEntriesIndexName)
+                        .size(0)
+                        .query(q -> q
+                                .multiMatch(m -> m
+                                        .fields("commander")
+                                        .query(commanderName)
+                                        .fuzziness("AUTO")))
+                        .aggregations("commanders", a -> a
+                                .terms(t -> t
+                                        .field("commander.keyword")
+                                        .size(5))
+                                .aggregations("wins", agg -> agg
+                                        .filter(f -> f
+                                                .term(t -> t
+                                                        .field("win")
+                                                        .value(FieldValue
+                                                                .of(true)))))
+                                .aggregations("avg_turns", agg -> agg
+                                        .avg(avg -> avg
+                                                .field("numberOfTurnsPlayed")))),
+                        Void.class);
 
-            for (StringTermsBucket bucket : commanders.buckets().array()) {
-                String commander = bucket.key();
-                long totalGames = bucket.docCount();
+                List<StringTermsBucket> commanders = response.aggregations()
+                        .get("commanders")
+                        .sterms()
+                        .buckets()
+                        .array();
 
-                Aggregate winsAgg = bucket.aggregations().get("wins");
-                long wins = winsAgg.filter().docCount();
+                List<CommanderStats> statsList = new ArrayList<>();
 
-                Aggregate avgTurnsAgg = bucket.aggregations().get("avg_turns");
-                Double avgTurnsValue = avgTurnsAgg.avg().value();
-                double averageTurns = avgTurnsValue != null ? avgTurnsValue : 0.0;
+                for (StringTermsBucket bucket : commanders) {
 
-                int losses = (int) (totalGames - wins);
-                double winRate = totalGames > 0 ? (double) wins / totalGames : 0.0;
+                    statsList.add(buildCommanderStats(
+                            bucket.key(),
+                            bucket.docCount(),
+                            bucket.aggregations().get("wins").filter().docCount(),
+                            bucket.aggregations().get("avg_turns").avg().value()));
+                }
 
-                CommanderStats stats = new CommanderStats(commander, totalGames, wins, losses, winRate, averageTurns);
+                return statsList;
+            } else {
 
-                statsList.add(stats);
+                // All commanders stats query returns 100 values
+                SearchResponse<Void> response = openSearchClient.search(s -> s
+                        .index(mtgGameEntriesIndexName)
+                        .size(0)
+                        .aggregations("commanders", a -> a
+                                .terms(t -> t
+                                        .field("commander.keyword")
+                                        .size(100))
+                                .aggregations("wins", agg -> agg
+                                        .filter(f -> f
+                                                .term(t -> t
+                                                        .field("win")
+                                                        .value(FieldValue
+                                                                .of(true)))))
+                                .aggregations("avg_turns", agg -> agg
+                                        .avg(avg -> avg
+                                                .field("numberOfTurnsPlayed")))),
+                        Void.class);
+
+                List<StringTermsBucket> commanders = response.aggregations()
+                        .get("commanders")
+                        .sterms()
+                        .buckets()
+                        .array();
+
+                List<CommanderStats> statsList = new ArrayList<>();
+
+                for (StringTermsBucket bucket : commanders) {
+
+                    statsList.add(buildCommanderStats(
+                            bucket.key(),
+                            bucket.docCount(),
+                            bucket.aggregations().get("wins").filter().docCount(),
+                            bucket.aggregations().get("avg_turns").avg().value()));
+                }
+
+                return statsList;
             }
-
-            return statsList;
 
         } catch (OpenSearchException | IOException e) {
             throw new AnalyticsException("Error occurred while fetching analytics data" + e.getMessage());
         } catch (RuntimeException e) {
-            // rethrow runtime exceptions without wrapping twice
             throw e;
         }
+    }
 
+    private CommanderStats buildCommanderStats(
+            String commander,
+            long totalGames,
+            long wins,
+            Double avgTurnsValue) {
+
+        Double averageTurns = (avgTurnsValue != null && !Double.isNaN(avgTurnsValue)) ? avgTurnsValue : 0.0;
+        Integer losses = (int) (totalGames - wins);
+        double winRate = totalGames > 0 ? (double) wins / totalGames : 0.0;
+
+        return new CommanderStats(
+                commander,
+                totalGames,
+                wins,
+                losses,
+                winRate,
+                averageTurns);
     }
 }

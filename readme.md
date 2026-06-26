@@ -26,27 +26,15 @@ Useful GET's and POST's using Powershell
 
 ```
 curl.exe --% -i -X POST http://localhost:8080/game_entry -H "Content-Type: application/json" -d "{\"player\":\"Alice\",\"commander\":\"Atraxa, Praetors' Voice\",\"colorIdentity\":\"WBUG\",\"win\":true,\"numberOfTurnsPlayed\":10}"
-```
 
-```
 curl.exe -i "http://localhost:8080/index_mapping"
-
-```
 
 curl.exe -i "http://localhost:8080/game_entry?player=Alice&commander=Atraxa%2C%20Praetors'%20Voice&colorIdentity=G&colorIdentity=WUBG"
 
-```
-
-```
-
 curl.exe -i "http://localhost:8080/game_entry?player=Jordan&colorIdentity=G"
-
-```
-
-```
 
 curl.exe -i "http://localhost:8080/analytics/commanders"
 
-```
+curl.exe -i "http://localhost:8080/analytics/commanders?commander=omnath"
 
 ```

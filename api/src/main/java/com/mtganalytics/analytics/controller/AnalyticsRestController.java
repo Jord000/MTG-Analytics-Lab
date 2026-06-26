@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mtganalytics.analytics.model.CommanderStats;
@@ -19,8 +20,9 @@ public class AnalyticsRestController {
     private final AnalyticsService analyticsService;
 
     @GetMapping("/analytics/commanders")
-    public ResponseEntity<List<CommanderStats>> getCommanderAnalytics() throws IOException {
-        return ResponseEntity.ok(analyticsService.getCommanderAnalytics());
+    public ResponseEntity<List<CommanderStats>> getCommanderAnalytics(@RequestParam(required = false) String commander)
+            throws IOException {
+        return ResponseEntity.ok(analyticsService.getCommanderAnalytics(commander));
     }
 
 }
