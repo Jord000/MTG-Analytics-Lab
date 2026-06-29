@@ -41,4 +41,8 @@ curl.exe -i "http://localhost:8080/analytics/players"
 
 curl.exe -i "http://localhost:8080/analytics/players?playerName=jordan"
 
+curl.exe -i "http://localhost:8080/analytics/color_identity"
+
+curl.exe -i "http://localhost:8080/analytics/game_stats"
+
 ```

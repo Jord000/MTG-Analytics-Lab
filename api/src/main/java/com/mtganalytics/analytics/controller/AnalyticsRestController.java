@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mtganalytics.analytics.model.ColorIdentityStats;
 import com.mtganalytics.analytics.model.CommanderStats;
+import com.mtganalytics.analytics.model.GameStats;
 import com.mtganalytics.analytics.model.PlayerStats;
 import com.mtganalytics.analytics.svc.AnalyticsService;
 
@@ -37,6 +38,12 @@ public class AnalyticsRestController {
     public ResponseEntity<List<ColorIdentityStats>> getColorIdentityAnalytics()
             throws IOException {
         return ResponseEntity.ok(analyticsService.getColorIdentityAnalytics());
+    }
+
+    @GetMapping("/analytics/game_stats")
+    public ResponseEntity<List<GameStats>> getGameStats()
+            throws IOException {
+        return ResponseEntity.ok(analyticsService.getGameStats());
     }
 
 }
