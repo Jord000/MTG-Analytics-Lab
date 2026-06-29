@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mtganalytics.analytics.model.CommanderStats;
+import com.mtganalytics.analytics.model.PlayerStats;
 import com.mtganalytics.analytics.svc.AnalyticsService;
 
 import lombok.Data;
@@ -23,6 +24,12 @@ public class AnalyticsRestController {
     public ResponseEntity<List<CommanderStats>> getCommanderAnalytics(@RequestParam(required = false) String commander)
             throws IOException {
         return ResponseEntity.ok(analyticsService.getCommanderAnalytics(commander));
+    }
+
+    @GetMapping("/analytics/players")
+    public ResponseEntity<List<PlayerStats>> getPlayerAnalytics(@RequestParam(required = false) String playerName)
+            throws IOException {
+        return ResponseEntity.ok(analyticsService.getPlayerAnalytics(playerName));
     }
 
 }

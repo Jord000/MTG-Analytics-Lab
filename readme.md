@@ -37,4 +37,8 @@ curl.exe -i "http://localhost:8080/analytics/commanders"
 
 curl.exe -i "http://localhost:8080/analytics/commanders?commander=omnath"
 
+curl.exe -i "http://localhost:8080/analytics/players"
+
+curl.exe -i "http://localhost:8080/analytics/players?playerName=jordan"
+
 ```

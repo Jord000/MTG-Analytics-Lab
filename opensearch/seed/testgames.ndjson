@@ -312,3 +312,16 @@
 
 { "index": { "_id": "9f1a1b2c-0055-4a11-8a01-000000000055" } }
 {"createdAt":"2026-06-16T14:42:00Z","player":"Rex","commander":"Golos, Tireless Pilgrim","colorIdentity":"WUBRG","win":false,"numberOfTurnsPlayed":12}
+
+{"index": { "_id": "9f1a1b2c-0056-4a11-8a01-000000000056" } }
+{"createdAt":"2026-06-15T21:30:00Z","player":"Jordan","commander":"Jodah, Archmage Eternal","colorIdentity":"WUBRG","win":true,"numberOfTurnsPlayed":8}
+
+{"index": { "_id": "9f1a1b2c-0056-4a11-8a01-000000000888" } }
+{"createdAt":"2026-06-15T21:30:00Z","player":"Jordan","commander":"Jodah, Archmage Eternal","colorIdentity":"WUBRG","win":true,"numberOfTurnsPlayed":9}
+
+{"index": { "_id": "9f1a1b2c-0056-4a11-8a01-000000000999" } }
+{"createdAt":"2026-06-15T21:30:00Z","player":"Jordan","commander":"Jodah, Archmage Eternal","colorIdentity":"WUBRG","win":false,"numberOfTurnsPlayed":10}
+
+{"index": { "_id": "9f1a1b2c-0056-4a11-8a01-0000000000777" } }
+{"createdAt":"2026-06-15T21:30:00Z","player":"Jordan","commander":"Jodah, Archmage Eternal","colorIdentity":"WUBRG","win":true,"numberOfTurnsPlayed":11}
+

@@ -13,6 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import com.mtganalytics.analytics.model.CommanderStats;
+import com.mtganalytics.analytics.model.PlayerStats;
 import com.mtganalytics.common.exception.AnalyticsException;
 
 import lombok.Data;
@@ -22,122 +23,250 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "game-service")
 public class AnalyticsService {
 
-    private String mtgGameEntriesIndexName;
+        private String mtgGameEntriesIndexName;
 
-    private final OpenSearchClient openSearchClient;
+        private final OpenSearchClient openSearchClient;
 
-    public List<CommanderStats> getCommanderAnalytics(String commanderName) throws AnalyticsException {
+        public List<CommanderStats> getCommanderAnalytics(String commanderName) throws AnalyticsException {
 
-        try {
+                try {
 
-            if (commanderName != null && !commanderName.isBlank()) {
+                        if (commanderName != null && !commanderName.isBlank()) {
 
-                // Aggregate stats for fuzzy-matched commanders in a single query
-                SearchResponse<Void> response = openSearchClient.search(s -> s
-                        .index(mtgGameEntriesIndexName)
-                        .size(0)
-                        .query(q -> q
-                                .multiMatch(m -> m
-                                        .fields("commander")
-                                        .query(commanderName)
-                                        .fuzziness("AUTO")))
-                        .aggregations("commanders", a -> a
-                                .terms(t -> t
-                                        .field("commander.keyword")
-                                        .size(5))
-                                .aggregations("wins", agg -> agg
-                                        .filter(f -> f
-                                                .term(t -> t
-                                                        .field("win")
-                                                        .value(FieldValue
-                                                                .of(true)))))
-                                .aggregations("avg_turns", agg -> agg
-                                        .avg(avg -> avg
-                                                .field("numberOfTurnsPlayed")))),
-                        Void.class);
+                                // Aggregate stats for fuzzy-matched commanders in a single query
+                                SearchResponse<Void> response = openSearchClient.search(s -> s
+                                                .index(mtgGameEntriesIndexName)
+                                                .size(0)
+                                                .query(q -> q
+                                                                .multiMatch(m -> m
+                                                                                .fields("commander")
+                                                                                .query(commanderName)
+                                                                                .fuzziness("AUTO")))
+                                                .aggregations("commanders", a -> a
+                                                                .terms(t -> t
+                                                                                .field("commander.keyword")
+                                                                                .size(5))
+                                                                .aggregations("wins", agg -> agg
+                                                                                .filter(f -> f
+                                                                                                .term(t -> t
+                                                                                                                .field("win")
+                                                                                                                .value(FieldValue
+                                                                                                                                .of(true)))))
+                                                                .aggregations("avg_turns", agg -> agg
+                                                                                .avg(avg -> avg
+                                                                                                .field("numberOfTurnsPlayed")))),
+                                                Void.class);
 
-                List<StringTermsBucket> commanders = response.aggregations()
-                        .get("commanders")
-                        .sterms()
-                        .buckets()
-                        .array();
+                                List<StringTermsBucket> commanders = response.aggregations()
+                                                .get("commanders")
+                                                .sterms()
+                                                .buckets()
+                                                .array();
 
-                List<CommanderStats> statsList = new ArrayList<>();
+                                List<CommanderStats> statsList = new ArrayList<>();
 
-                for (StringTermsBucket bucket : commanders) {
+                                for (StringTermsBucket bucket : commanders) {
 
-                    statsList.add(buildCommanderStats(
-                            bucket.key(),
-                            bucket.docCount(),
-                            bucket.aggregations().get("wins").filter().docCount(),
-                            bucket.aggregations().get("avg_turns").avg().value()));
+                                        statsList.add(buildCommanderStats(
+                                                        bucket.key(),
+                                                        bucket.docCount(),
+                                                        bucket.aggregations().get("wins").filter().docCount(),
+                                                        bucket.aggregations().get("avg_turns").avg().value()));
+                                }
+
+                                return statsList;
+                        } else {
+
+                                // All commanders stats query returns 100 values
+                                SearchResponse<Void> response = openSearchClient.search(s -> s
+                                                .index(mtgGameEntriesIndexName)
+                                                .size(0)
+                                                .aggregations("commanders", a -> a
+                                                                .terms(t -> t
+                                                                                .field("commander.keyword")
+                                                                                .size(100))
+                                                                .aggregations("wins", agg -> agg
+                                                                                .filter(f -> f
+                                                                                                .term(t -> t
+                                                                                                                .field("win")
+                                                                                                                .value(FieldValue
+                                                                                                                                .of(true)))))
+                                                                .aggregations("avg_turns", agg -> agg
+                                                                                .avg(avg -> avg
+                                                                                                .field("numberOfTurnsPlayed")))),
+                                                Void.class);
+
+                                List<StringTermsBucket> commanders = response.aggregations()
+                                                .get("commanders")
+                                                .sterms()
+                                                .buckets()
+                                                .array();
+
+                                List<CommanderStats> statsList = new ArrayList<>();
+
+                                for (StringTermsBucket bucket : commanders) {
+
+                                        statsList.add(buildCommanderStats(
+                                                        bucket.key(),
+                                                        bucket.docCount(),
+                                                        bucket.aggregations().get("wins").filter().docCount(),
+                                                        bucket.aggregations().get("avg_turns").avg().value()));
+                                }
+
+                                return statsList;
+                        }
+
+                } catch (OpenSearchException | IOException e) {
+                        throw new AnalyticsException("Error occurred while fetching analytics data" + e.getMessage());
+                } catch (RuntimeException e) {
+                        throw e;
                 }
-
-                return statsList;
-            } else {
-
-                // All commanders stats query returns 100 values
-                SearchResponse<Void> response = openSearchClient.search(s -> s
-                        .index(mtgGameEntriesIndexName)
-                        .size(0)
-                        .aggregations("commanders", a -> a
-                                .terms(t -> t
-                                        .field("commander.keyword")
-                                        .size(100))
-                                .aggregations("wins", agg -> agg
-                                        .filter(f -> f
-                                                .term(t -> t
-                                                        .field("win")
-                                                        .value(FieldValue
-                                                                .of(true)))))
-                                .aggregations("avg_turns", agg -> agg
-                                        .avg(avg -> avg
-                                                .field("numberOfTurnsPlayed")))),
-                        Void.class);
-
-                List<StringTermsBucket> commanders = response.aggregations()
-                        .get("commanders")
-                        .sterms()
-                        .buckets()
-                        .array();
-
-                List<CommanderStats> statsList = new ArrayList<>();
-
-                for (StringTermsBucket bucket : commanders) {
-
-                    statsList.add(buildCommanderStats(
-                            bucket.key(),
-                            bucket.docCount(),
-                            bucket.aggregations().get("wins").filter().docCount(),
-                            bucket.aggregations().get("avg_turns").avg().value()));
-                }
-
-                return statsList;
-            }
-
-        } catch (OpenSearchException | IOException e) {
-            throw new AnalyticsException("Error occurred while fetching analytics data" + e.getMessage());
-        } catch (RuntimeException e) {
-            throw e;
         }
-    }
 
-    private CommanderStats buildCommanderStats(
-            String commander,
-            long totalGames,
-            long wins,
-            Double avgTurnsValue) {
+        public List<PlayerStats> getPlayerAnalytics(String playerName) throws AnalyticsException {
+                try {
 
-        Double averageTurns = (avgTurnsValue != null && !Double.isNaN(avgTurnsValue)) ? avgTurnsValue : 0.0;
-        Integer losses = (int) (totalGames - wins);
-        double winRate = totalGames > 0 ? (double) wins / totalGames : 0.0;
+                        if (playerName != null && !playerName.isBlank()) {
 
-        return new CommanderStats(
-                commander,
-                totalGames,
-                wins,
-                losses,
-                winRate,
-                averageTurns);
-    }
+                                // Aggregate stats for fuzzy-matched players in a single query
+                                SearchResponse<Void> response = openSearchClient.search(s -> s
+                                                .index(mtgGameEntriesIndexName)
+                                                .size(0)
+                                                .query(q -> q
+                                                                .multiMatch(m -> m
+                                                                                .fields("player")
+                                                                                .query(playerName)
+                                                                                .fuzziness("AUTO")))
+                                                .aggregations("players", a -> a
+                                                                .terms(t -> t
+                                                                                .field("player.keyword")
+                                                                                .size(5))
+                                                                .aggregations("wins", agg -> agg
+                                                                                .filter(f -> f
+                                                                                                .term(t -> t
+                                                                                                                .field("win")
+                                                                                                                .value(FieldValue
+                                                                                                                                .of(true)))))
+                                                                .aggregations("favourite_commander", agg -> agg
+                                                                                .terms(t -> t
+                                                                                                .field("commander.keyword")
+                                                                                                .size(1)))),
+                                                Void.class);
+
+                                List<StringTermsBucket> players = response.aggregations()
+                                                .get("players")
+                                                .sterms()
+                                                .buckets()
+                                                .array();
+
+                                List<PlayerStats> statsList = new ArrayList<>();
+
+                                for (StringTermsBucket bucket : players) {
+
+                                        List<StringTermsBucket> commanderBuckets = bucket.aggregations()
+                                                        .get("favourite_commander")
+                                                        .sterms()
+                                                        .buckets()
+                                                        .array();
+
+                                        String mostUsedCommander = commanderBuckets.isEmpty() ? "Unknown"
+                                                        : commanderBuckets.get(0).key();
+
+                                        statsList.add(buildPlayerStats(
+                                                        bucket.key(),
+                                                        bucket.docCount(),
+                                                        bucket.aggregations().get("wins").filter().docCount(),
+                                                        mostUsedCommander));
+                                }
+
+                                return statsList;
+                        } else {
+
+                                // All players stats query returns 100 values
+                                SearchResponse<Void> response = openSearchClient.search(s -> s
+                                                .index(mtgGameEntriesIndexName)
+                                                .size(0)
+                                                .aggregations("players", a -> a
+                                                                .terms(t -> t
+                                                                                .field("player.keyword")
+                                                                                .size(100))
+                                                                .aggregations("wins", agg -> agg
+                                                                                .filter(f -> f
+                                                                                                .term(t -> t
+                                                                                                                .field("win")
+                                                                                                                .value(FieldValue
+                                                                                                                                .of(true)))))
+                                                                .aggregations("favourite_commander", agg -> agg
+                                                                                .terms(t -> t
+                                                                                                .field("commander.keyword")
+                                                                                                .size(1)))),
+                                                Void.class);
+
+                                List<StringTermsBucket> players = response.aggregations()
+                                                .get("players")
+                                                .sterms()
+                                                .buckets()
+                                                .array();
+
+                                List<PlayerStats> statsList = new ArrayList<>();
+
+                                for (StringTermsBucket bucket : players) {
+
+                                        List<StringTermsBucket> commanderBuckets = bucket.aggregations()
+                                                        .get("favourite_commander")
+                                                        .sterms()
+                                                        .buckets()
+                                                        .array();
+
+                                        String mostUsedCommander = commanderBuckets.isEmpty() ? "Unknown"
+                                                        : commanderBuckets.get(0).key();
+
+                                        statsList.add(buildPlayerStats(
+                                                        bucket.key(),
+                                                        bucket.docCount(),
+                                                        bucket.aggregations().get("wins").filter().docCount(),
+                                                        mostUsedCommander));
+                                }
+
+                                return statsList;
+                        }
+
+                } catch (OpenSearchException | IOException e) {
+                        throw new AnalyticsException("Error occurred while fetching analytics data" + e.getMessage());
+                } catch (RuntimeException e) {
+                        throw e;
+                }
+        }
+
+        private CommanderStats buildCommanderStats(
+                        String commander,
+                        long totalGames,
+                        long wins,
+                        Double avgTurnsValue) {
+
+                Double averageTurns = (avgTurnsValue != null && !Double.isNaN(avgTurnsValue)) ? avgTurnsValue : 0.0;
+                Integer losses = (int) (totalGames - wins);
+                double winRate = totalGames > 0 ? (double) wins / totalGames : 0.0;
+
+                return new CommanderStats(
+                                commander,
+                                totalGames,
+                                wins,
+                                losses,
+                                winRate,
+                                averageTurns);
+        }
+
+        private PlayerStats buildPlayerStats(
+                        String player,
+                        long totalGames,
+                        long wins,
+                        String mostUsedCommander) {
+
+                return new PlayerStats(
+                                player,
+                                totalGames,
+                                wins,
+                                mostUsedCommander);
+        }
 }
