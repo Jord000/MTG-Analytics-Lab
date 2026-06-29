@@ -12,9 +12,11 @@ import org.opensearch.client.opensearch.core.SearchResponse;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
+import com.mtganalytics.analytics.model.ColorIdentityStats;
 import com.mtganalytics.analytics.model.CommanderStats;
 import com.mtganalytics.analytics.model.PlayerStats;
 import com.mtganalytics.common.exception.AnalyticsException;
+import com.mtganalytics.common.utils.GameUtils;
 
 import lombok.Data;
 
@@ -230,6 +232,41 @@ public class AnalyticsService {
 
                                 return statsList;
                         }
+
+                } catch (OpenSearchException | IOException e) {
+                        throw new AnalyticsException("Error occurred while fetching analytics data" + e.getMessage());
+                } catch (RuntimeException e) {
+                        throw e;
+                }
+        }
+
+        public List<ColorIdentityStats> getColorIdentityAnalytics() throws AnalyticsException {
+                try {
+
+                        SearchResponse<Void> response = openSearchClient.search(s -> s
+                                        .index(mtgGameEntriesIndexName)
+                                        .size(0)
+                                        .aggregations("color_identity", a -> a
+                                                        .terms(t -> t
+                                                                        .field("colorIdentity")
+                                                                        .size(50))),
+                                        Void.class);
+
+                        List<StringTermsBucket> colorIdentities = response.aggregations()
+                                        .get("color_identity")
+                                        .sterms()
+                                        .buckets()
+                                        .array();
+
+                        List<ColorIdentityStats> statsList = new ArrayList<>();
+
+                        for (StringTermsBucket bucket : colorIdentities) {
+                                statsList.add(new ColorIdentityStats(
+                                                GameUtils.standardiseColorIdentity(bucket.key()),
+                                                (int) bucket.docCount()));
+                        }
+
+                        return statsList;
 
                 } catch (OpenSearchException | IOException e) {
                         throw new AnalyticsException("Error occurred while fetching analytics data" + e.getMessage());
