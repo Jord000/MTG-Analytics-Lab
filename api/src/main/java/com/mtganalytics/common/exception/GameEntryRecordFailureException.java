@@ -1,4 +1,4 @@
-package com.mtganalytics.lab.exception;
+package com.mtganalytics.common.exception;
 
 public class GameEntryRecordFailureException extends RuntimeException {
     public GameEntryRecordFailureException(String message) {

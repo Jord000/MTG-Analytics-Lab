@@ -95,7 +95,7 @@
 {"createdAt":"2026-06-17T07:18:00Z","player":"Christian","commander":"Zada, Hedron Grinder","colorIdentity":"R","win":true,"numberOfTurnsPlayed":11}
 
 { "index": { "_id": "a8e65b5c-020d-46ee-aa71-9270b834f486" } }
-{"createdAt":"2026-06-19T12:31:00Z","player":"Dan","commander":"Winota, Joiner of Forces","colorIdentity":"RW","win":false,"numberOfTurnsPlayed":9}
+{"createdAt":"2026-06-19T12:31:00Z","player":"Dan","commander":"Winota, Joiner of Forces","colorIdentity":"WR","win":false,"numberOfTurnsPlayed":9}
 
 { "index": { "_id": "44e8e40f-a69a-4c15-9635-dc9d83b05da8" } }
 {"createdAt":"2026-06-18T11:36:00Z","player":"Karl","commander":"Omnath, Locus of Creation","colorIdentity":"WURG","win":false,"numberOfTurnsPlayed":13}
@@ -131,7 +131,7 @@
 {"createdAt":"2026-06-21T06:12:00Z","player":"Dan","commander":"Yuriko, the Tiger's Shadow","colorIdentity":"UB","win":false,"numberOfTurnsPlayed":11}
 
 { "index": { "_id": "e606ea88-aeb5-484c-af75-c2a04068fcfb" } }
-{"createdAt":"2026-06-19T17:17:00Z","player":"Arron","commander":"Winota, Joiner of Forces","colorIdentity":"RW","win":true,"numberOfTurnsPlayed":11}
+{"createdAt":"2026-06-19T17:17:00Z","player":"Arron","commander":"Winota, Joiner of Forces","colorIdentity":"WR","win":true,"numberOfTurnsPlayed":11}
 
 { "index": { "_id": "722020cd-8767-4172-9601-7123c42de152" } }
 {"createdAt":"2026-06-20T09:34:00Z","player":"Christian","commander":"Krenko, Mob Boss","colorIdentity":"R","win":true,"numberOfTurnsPlayed":14}
@@ -164,7 +164,7 @@
 {"createdAt":"2026-06-21T06:40:00Z","player":"Chris","commander":"Thrasios, Triton Hero","colorIdentity":"UG","win":true,"numberOfTurnsPlayed":11}
 
 { "index": { "_id": "9f1a1b2c-0006-4a11-8a01-000000000006" } }
-{"createdAt":"2026-06-18T20:10:00Z","player":"Karl","commander":"Tymna the Weaver","colorIdentity":"BW","win":false,"numberOfTurnsPlayed":9}
+{"createdAt":"2026-06-18T20:10:00Z","player":"Karl","commander":"Tymna the Weaver","colorIdentity":"WB","win":false,"numberOfTurnsPlayed":9}
 
 { "index": { "_id": "9f1a1b2c-0007-4a11-8a01-000000000007" } }
 {"createdAt":"2026-06-17T15:55:00Z","player":"Sam","commander":"Kinnan, Bonder Prodigy","colorIdentity":"UG","win":true,"numberOfTurnsPlayed":13}
@@ -179,7 +179,7 @@
 {"createdAt":"2026-06-22T03:12:00Z","player":"Christian","commander":"Yuriko, the Tiger's Shadow","colorIdentity":"UB","win":false,"numberOfTurnsPlayed":12}
 
 { "index": { "_id": "9f1a1b2c-0011-4a11-8a01-000000000011" } }
-{"createdAt":"2026-06-21T22:01:00Z","player":"Arron","commander":"Winota, Joiner of Forces","colorIdentity":"RW","win":true,"numberOfTurnsPlayed":11}
+{"createdAt":"2026-06-21T22:01:00Z","player":"Arron","commander":"Winota, Joiner of Forces","colorIdentity":"WR","win":true,"numberOfTurnsPlayed":11}
 
 { "index": { "_id": "9f1a1b2c-0012-4a11-8a01-000000000012" } }
 {"createdAt":"2026-06-20T08:18:00Z","player":"George","commander":"Krenko, Mob Boss","colorIdentity":"R","win":true,"numberOfTurnsPlayed":8}
@@ -191,7 +191,7 @@
 {"createdAt":"2026-06-18T10:09:00Z","player":"Jess","commander":"Omnath, Locus of Creation","colorIdentity":"WURG","win":true,"numberOfTurnsPlayed":13}
 
 { "index": { "_id": "9f1a1b2c-0015-4a11-8a01-000000000015" } }
-{"createdAt":"2026-06-17T12:44:00Z","player":"Dan","commander":"Omnath, Locus of Rage","colorIdentity":"GR","win":false,"numberOfTurnsPlayed":12}
+{"createdAt":"2026-06-17T12:44:00Z","player":"Dan","commander":"Omnath, Locus of Rage","colorIdentity":"RG","win":false,"numberOfTurnsPlayed":12}
 
 { "index": { "_id": "9f1a1b2c-0016-4a11-8a01-000000000016" } }
 {"createdAt":"2026-06-16T09:31:00Z","player":"Sam","commander":"Omnath, Locus of Mana","colorIdentity":"G","win":true,"numberOfTurnsPlayed":10}
@@ -209,7 +209,7 @@
 {"createdAt":"2026-06-20T22:14:00Z","player":"Rex","commander":"Sauron, the Dark Lord","colorIdentity":"UBR","win":false,"numberOfTurnsPlayed":14}
 
 { "index": { "_id": "9f1a1b2c-0021-4a11-8a01-000000000021" } }
-{"createdAt":"2026-06-19T07:11:00Z","player":"George","commander":"Gishath, Sun's Avatar","colorIdentity":"RGW","win":true,"numberOfTurnsPlayed":11}
+{"createdAt":"2026-06-19T07:11:00Z","player":"George","commander":"Gishath, Sun's Avatar","colorIdentity":"WRG","win":true,"numberOfTurnsPlayed":11}
 
 { "index": { "_id": "9f1a1b2c-0022-4a11-8a01-000000000022" } }
 {"createdAt":"2026-06-18T17:36:00Z","player":"Jess","commander":"Lathril, Blade of the Elves","colorIdentity":"BG","win":false,"numberOfTurnsPlayed":10}
@@ -221,10 +221,10 @@
 {"createdAt":"2026-06-16T21:58:00Z","player":"Arron","commander":"Esika, God of the Tree","colorIdentity":"WUBRG","win":true,"numberOfTurnsPlayed":16}
 
 { "index": { "_id": "9f1a1b2c-0025-4a11-8a01-000000000025" } }
-{"createdAt":"2026-06-15T23:40:00Z","player":"Christian","commander":"Ruric Thar, the Unbowed","colorIdentity":"GR","win":false,"numberOfTurnsPlayed":12}
+{"createdAt":"2026-06-15T23:40:00Z","player":"Christian","commander":"Ruric Thar, the Unbowed","colorIdentity":"RG","win":false,"numberOfTurnsPlayed":12}
 
 { "index": { "_id": "9f1a1b2c-0026-4a11-8a01-000000000026" } }
-{"createdAt":"2026-06-22T01:15:00Z","player":"Karl","commander":"Teysa Karlov","colorIdentity":"BW","win":true,"numberOfTurnsPlayed":14}
+{"createdAt":"2026-06-22T01:15:00Z","player":"Karl","commander":"Teysa Karlov","colorIdentity":"WB","win":true,"numberOfTurnsPlayed":14}
 
 { "index": { "_id": "9f1a1b2c-0027-4a11-8a01-000000000027" } }
 {"createdAt":"2026-06-21T11:02:00Z","player":"Sam","commander":"Sidisi, Brood Tyrant","colorIdentity":"UBG","win":false,"numberOfTurnsPlayed":9}
@@ -233,7 +233,7 @@
 {"createdAt":"2026-06-20T06:48:00Z","player":"Rex","commander":"Meren of Clan Nel Toth","colorIdentity":"BG","win":true,"numberOfTurnsPlayed":15}
 
 { "index": { "_id": "9f1a1b2c-0029-4a11-8a01-000000000029" } }
-{"createdAt":"2026-06-19T13:55:00Z","player":"Jess","commander":"Edgar, Charmed Groom","colorIdentity":"BW","win":false,"numberOfTurnsPlayed":10}
+{"createdAt":"2026-06-19T13:55:00Z","player":"Jess","commander":"Edgar, Charmed Groom","colorIdentity":"WB","win":false,"numberOfTurnsPlayed":10}
 
 { "index": { "_id": "9f1a1b2c-0030-4a11-8a01-000000000030" } }
 {"createdAt":"2026-06-18T09:07:00Z","player":"Dan","commander":"Anje Falkenrath","colorIdentity":"BR","win":true,"numberOfTurnsPlayed":11}
@@ -251,7 +251,7 @@
 {"createdAt":"2026-06-22T07:44:00Z","player":"Christian","commander":"Zada, Hedron Grinder","colorIdentity":"R","win":false,"numberOfTurnsPlayed":9}
 
 { "index": { "_id": "9f1a1b2c-0035-4a11-8a01-000000000035" } }
-{"createdAt":"2026-06-21T14:28:00Z","player":"Karl","commander":"Marchesa, the Black Rose","colorIdentity":"BRU","win":true,"numberOfTurnsPlayed":13}
+{"createdAt":"2026-06-21T14:28:00Z","player":"Karl","commander":"Marchesa, the Black Rose","colorIdentity":"UBR","win":true,"numberOfTurnsPlayed":13}
 
 { "index": { "_id": "9f1a1b2c-0036-4a11-8a01-000000000036" } }
 {"createdAt":"2026-06-20T19:19:00Z","player":"Behrooz","commander":"Derevi, Empyrial Tactician","colorIdentity":"WUG","win":false,"numberOfTurnsPlayed":12}
@@ -275,16 +275,16 @@
 {"createdAt":"2026-06-21T03:25:00Z","player":"Jordan","commander":"Giada, Font of Hope","colorIdentity":"W","win":true,"numberOfTurnsPlayed":10}
 
 { "index": { "_id": "9f1a1b2c-0043-4a11-8a01-000000000043" } }
-{"createdAt":"2026-06-20T15:15:00Z","player":"Chris","commander":"Ezuri, Claw of Progress","colorIdentity":"GU","win":false,"numberOfTurnsPlayed":11}
+{"createdAt":"2026-06-20T15:15:00Z","player":"Chris","commander":"Ezuri, Claw of Progress","colorIdentity":"UG","win":false,"numberOfTurnsPlayed":11}
 
 { "index": { "_id": "9f1a1b2c-0044-4a11-8a01-000000000044" } }
-{"createdAt":"2026-06-19T09:09:00Z","player":"Tom","commander":"Feather, the Redeemed","colorIdentity":"RW","win":true,"numberOfTurnsPlayed":13}
+{"createdAt":"2026-06-19T09:09:00Z","player":"Tom","commander":"Feather, the Redeemed","colorIdentity":"WR","win":true,"numberOfTurnsPlayed":13}
 
 { "index": { "_id": "9f1a1b2c-0045-4a11-8a01-000000000045" } }
-{"createdAt":"2026-06-18T04:04:00Z","player":"Sam","commander":"Sythis, Harvest's Hand","colorIdentity":"GW","win":false,"numberOfTurnsPlayed":10}
+{"createdAt":"2026-06-18T04:04:00Z","player":"Sam","commander":"Sythis, Harvest's Hand","colorIdentity":"WG","win":false,"numberOfTurnsPlayed":10}
 
 { "index": { "_id": "9f1a1b2c-0046-4a11-8a01-000000000046" } }
-{"createdAt":"2026-06-17T23:59:00Z","player":"Rex","commander":"Wilhelt, the Rotcleaver","colorIdentity":"BU","win":true,"numberOfTurnsPlayed":14}
+{"createdAt":"2026-06-17T23:59:00Z","player":"Rex","commander":"Wilhelt, the Rotcleaver","colorIdentity":"UB","win":true,"numberOfTurnsPlayed":14}
 
 { "index": { "_id": "9f1a1b2c-0047-4a11-8a01-000000000047" } }
 {"createdAt":"2026-06-16T07:07:00Z","player":"Karl","commander":"Magda, Brazen Outlaw","colorIdentity":"R","win":false,"numberOfTurnsPlayed":9}
@@ -293,10 +293,10 @@
 {"createdAt":"2026-06-15T18:18:00Z","player":"George","commander":"Omnath, Locus of All","colorIdentity":"WUBRG","win":true,"numberOfTurnsPlayed":17}
 
 { "index": { "_id": "9f1a1b2c-0049-4a11-8a01-000000000049" } }
-{"createdAt":"2026-06-22T00:40:00Z","player":"Jess","commander":"Kykar, Wind's Fury","colorIdentity":"RUW","win":false,"numberOfTurnsPlayed":11}
+{"createdAt":"2026-06-22T00:40:00Z","player":"Jess","commander":"Kykar, Wind's Fury","colorIdentity":"WUR","win":false,"numberOfTurnsPlayed":11}
 
 { "index": { "_id": "9f1a1b2c-0050-4a11-8a01-000000000050" } }
-{"createdAt":"2026-06-21T08:08:00Z","player":"Dan","commander":"Rashmi, Eternities Crafter","colorIdentity":"GU","win":true,"numberOfTurnsPlayed":12}
+{"createdAt":"2026-06-21T08:08:00Z","player":"Dan","commander":"Rashmi, Eternities Crafter","colorIdentity":"UG","win":true,"numberOfTurnsPlayed":12}
 
 { "index": { "_id": "9f1a1b2c-0051-4a11-8a01-000000000051" } }
 {"createdAt":"2026-06-20T11:22:00Z","player":"Arron","commander":"Kess, Dissident Mage","colorIdentity":"UBR","win":false,"numberOfTurnsPlayed":13}
@@ -312,3 +312,16 @@
 
 { "index": { "_id": "9f1a1b2c-0055-4a11-8a01-000000000055" } }
 {"createdAt":"2026-06-16T14:42:00Z","player":"Rex","commander":"Golos, Tireless Pilgrim","colorIdentity":"WUBRG","win":false,"numberOfTurnsPlayed":12}
+
+{"index": { "_id": "9f1a1b2c-0056-4a11-8a01-000000000056" } }
+{"createdAt":"2026-06-15T21:30:00Z","player":"Jordan","commander":"Jodah, Archmage Eternal","colorIdentity":"WUBRG","win":true,"numberOfTurnsPlayed":8}
+
+{"index": { "_id": "9f1a1b2c-0056-4a11-8a01-000000000888" } }
+{"createdAt":"2026-06-15T21:30:00Z","player":"Jordan","commander":"Jodah, Archmage Eternal","colorIdentity":"WUBRG","win":true,"numberOfTurnsPlayed":9}
+
+{"index": { "_id": "9f1a1b2c-0056-4a11-8a01-000000000999" } }
+{"createdAt":"2026-06-15T21:30:00Z","player":"Jordan","commander":"Jodah, Archmage Eternal","colorIdentity":"WUBRG","win":false,"numberOfTurnsPlayed":10}
+
+{"index": { "_id": "9f1a1b2c-0056-4a11-8a01-0000000000777" } }
+{"createdAt":"2026-06-15T21:30:00Z","player":"Jordan","commander":"Jodah, Archmage Eternal","colorIdentity":"WUBRG","win":true,"numberOfTurnsPlayed":11}
+

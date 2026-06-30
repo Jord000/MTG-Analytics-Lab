@@ -1,9 +1,10 @@
-package com.mtganalytics.lab.svc;
+package com.mtganalytics.game.svc;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Objects;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch._types.SortOrder;
@@ -11,15 +12,14 @@ import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
 import org.opensearch.client.opensearch.core.GetResponse;
 import org.opensearch.client.opensearch.core.SearchResponse;
-import org.opensearch.client.opensearch.core.search.Hit;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
-import com.mtganalytics.lab.exception.GameEntryNotFoundException;
-import com.mtganalytics.lab.exception.GameServiceException;
-import com.mtganalytics.lab.model.GameEntryDocument;
-import com.mtganalytics.lab.model.GameEntryRecord;
-import com.mtganalytics.lab.utils.GameUtils;
+import com.mtganalytics.common.exception.GameEntryNotFoundException;
+import com.mtganalytics.common.exception.GameServiceException;
+import com.mtganalytics.common.utils.GameUtils;
+import com.mtganalytics.game.model.GameEntryDocument;
+import com.mtganalytics.game.model.GameEntryRecord;
 
 import lombok.Data;
 
@@ -70,7 +70,8 @@ public class GameQueryService {
                     GameEntryDocument.class);
 
             return response.hits().hits().stream()
-                    .map(Hit::source)
+                    .map(hit -> hit.source())
+                    .filter(Objects::nonNull)
                     .toList();
 
         } catch (IOException e) {

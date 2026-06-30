@@ -39,27 +39,37 @@ curl -s -X PUT "$BASE_URL/$INDEX" \
     -d '{
       "mappings": {
         "properties": {
-          "colorIdentity": {
-            "type": "keyword"
-          },
-          "player": {
-            "type": "text"
-          },
-          "commander": {
-            "type": "text"
-          },
-          "win": {
-            "type": "boolean"
-          },
-          "numberOfTurnsPlayed": {
-            "type": "long"
-          },
-          "createdAt": {
-            "type": "date"
-          }
+              "player": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "commander": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "colorIdentity": {
+                "type": "keyword"
+              },
+              "win": {
+                "type": "boolean"
+              },
+              "numberOfTurnsPlayed": {
+                "type": "long"
+              },
+              "createdAt": {
+                "type": "date"
         }
       }
-    }' >/dev/null
+    }
+  }' >/dev/null
 
 # --------------------------------------------
 # 4. Verify mapping

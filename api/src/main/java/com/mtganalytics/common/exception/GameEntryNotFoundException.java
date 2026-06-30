@@ -1,4 +1,4 @@
-package com.mtganalytics.lab.exception;
+package com.mtganalytics.common.exception;
 
 public class GameEntryNotFoundException extends RuntimeException {
     public GameEntryNotFoundException(String id) {
