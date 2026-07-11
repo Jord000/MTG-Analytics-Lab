@@ -1,0 +1,484 @@
+[
+  { "name": "The Ur-Dragon", "colourIdentity": "WUBRG", "weight": 48359 },
+  { "name": "Edgar Markov", "colourIdentity": "WBR", "weight": 47768 },
+  {
+    "name": "Y'shtola, Night's Blessed",
+    "colourIdentity": "BG",
+    "weight": 45316
+  },
+  {
+    "name": "Atraxa, Praetors' Voice",
+    "colourIdentity": "WUBG",
+    "weight": 42219
+  },
+  { "name": "Krenko, Mob Boss", "colourIdentity": "R", "weight": 41726 },
+  { "name": "Kaalia of the Vast", "colourIdentity": "WBR", "weight": 37857 },
+  { "name": "Ms. Bumbleflower", "colourIdentity": "WUG", "weight": 35241 },
+  { "name": "Vivi Ornitier", "colourIdentity": "UR", "weight": 34946 },
+  { "name": "Sauron, the Dark Lord", "colourIdentity": "UBR", "weight": 34738 },
+  {
+    "name": "Teval, the Balanced Scale",
+    "colourIdentity": "WBG",
+    "weight": 34370
+  },
+  { "name": "Pantlaza, Sun-Favored", "colourIdentity": "WRG", "weight": 34110 },
+  {
+    "name": "Lathril, Blade of the Elves",
+    "colourIdentity": "BG",
+    "weight": 32591
+  },
+  { "name": "Fire Lord Azula", "colourIdentity": "UR", "weight": 32482 },
+  { "name": "Giada, Font of Hope", "colourIdentity": "W", "weight": 32383 },
+  { "name": "The Wise Mothman", "colourIdentity": "UBG", "weight": 31915 },
+  {
+    "name": "Yuriko, the Tiger's Shadow",
+    "colourIdentity": "UB",
+    "weight": 31265
+  },
+  { "name": "Jodah, the Unifier", "colourIdentity": "WUBRG", "weight": 31014 },
+  {
+    "name": "Kenrith, the Returned King",
+    "colourIdentity": "WUBRG",
+    "weight": 30702
+  },
+  {
+    "name": "Nekusar, the Mindrazer",
+    "colourIdentity": "UBR",
+    "weight": 30615
+  },
+  { "name": "Baylen, the Haymaker", "colourIdentity": "WRG", "weight": 29731 },
+  {
+    "name": "Isshin, Two Heavens as One",
+    "colourIdentity": "WBR",
+    "weight": 29024
+  },
+  {
+    "name": "Valgavoth, Harrower of Souls",
+    "colourIdentity": "BR",
+    "weight": 28371
+  },
+  {
+    "name": "Ulalek, Fused Atrocity",
+    "colourIdentity": "UBRG",
+    "weight": 28239
+  },
+  { "name": "Miirym, Sentinel Wyrm", "colourIdentity": "URG", "weight": 27617 },
+  {
+    "name": "Toph, the First Metalbender",
+    "colourIdentity": "RG",
+    "weight": 27578
+  },
+  { "name": "Kefka, Court Mage", "colourIdentity": "UBR", "weight": 26970 },
+  {
+    "name": "Chatterfang, Squirrel General",
+    "colourIdentity": "BG",
+    "weight": 26717
+  },
+  { "name": "Cloud, Ex-SOLDIER", "colourIdentity": "WR", "weight": 26639 },
+  {
+    "name": "Sephiroth, Fabled SOLDIER",
+    "colourIdentity": "B",
+    "weight": 26626
+  },
+  {
+    "name": "Hearthhull, the Worldseed",
+    "colourIdentity": "RG",
+    "weight": 26544
+  },
+  {
+    "name": "Bello, Bard of the Brambles",
+    "colourIdentity": "RG",
+    "weight": 26284
+  },
+  {
+    "name": "Esika, God of the Tree",
+    "colourIdentity": "WUBRG",
+    "weight": 24583
+  },
+  {
+    "name": "Hashaton, Scarab's Fist",
+    "colourIdentity": "UB",
+    "weight": 24422
+  },
+  { "name": "Flubs, the Fool", "colourIdentity": "URG", "weight": 24340 },
+  {
+    "name": "Hakbal of the Surging Soul",
+    "colourIdentity": "UG",
+    "weight": 24109
+  },
+  {
+    "name": "Muldrotha, the Gravetide",
+    "colourIdentity": "UBG",
+    "weight": 23984
+  },
+  { "name": "The Necrobloom", "colourIdentity": "WBG", "weight": 23797 },
+  {
+    "name": "Glarb, Calamity's Augur",
+    "colourIdentity": "UBG",
+    "weight": 23303
+  },
+  { "name": "Ygra, Eater of All", "colourIdentity": "BG", "weight": 23179 },
+  {
+    "name": "Rin and Seri, Inseparable",
+    "colourIdentity": "WRG",
+    "weight": 22613
+  },
+  {
+    "name": "Animar, Soul of Elements",
+    "colourIdentity": "URG",
+    "weight": 22592
+  },
+  {
+    "name": "Arcades, the Strategist",
+    "colourIdentity": "WUG",
+    "weight": 22415
+  },
+  { "name": "Ashling, the Limitless", "colourIdentity": "R", "weight": 22207 },
+  {
+    "name": "Wilhelt, the Rotcleaver",
+    "colourIdentity": "UB",
+    "weight": 21879
+  },
+  {
+    "name": "Caesar, Legion's Emperor",
+    "colourIdentity": "WBR",
+    "weight": 21865
+  },
+  { "name": "Aragorn, the Uniter", "colourIdentity": "WUBRG", "weight": 21809 },
+  {
+    "name": "Mr. House, President and CEO",
+    "colourIdentity": "WR",
+    "weight": 21766
+  },
+  {
+    "name": "Breya, Etherium Shaper",
+    "colourIdentity": "WUBR",
+    "weight": 21486
+  },
+  { "name": "Meren of Clan Nel Toth", "colourIdentity": "BG", "weight": 21320 },
+  {
+    "name": "Oloro, Ageless Ascetic",
+    "colourIdentity": "WUB",
+    "weight": 20982
+  },
+  {
+    "name": "Korvold, Fae-Cursed King",
+    "colourIdentity": "BRG",
+    "weight": 20784
+  },
+  { "name": "Teysa Karlov", "colourIdentity": "WB", "weight": 20642 },
+  {
+    "name": "Aesi, Tyrant of Gyre Strait",
+    "colourIdentity": "UG",
+    "weight": 20591
+  },
+  { "name": "Prosper, Tome-Bound", "colourIdentity": "BR", "weight": 20487 },
+  { "name": "Sythis, Harvest's Hand", "colourIdentity": "WG", "weight": 20275 },
+  { "name": "Rhys the Redeemed", "colourIdentity": "WG", "weight": 20184 },
+  { "name": "Niv-Mizzet, Parun", "colourIdentity": "UR", "weight": 19982 },
+  { "name": "Mizzix of the Izmagnus", "colourIdentity": "UR", "weight": 19864 },
+  {
+    "name": "Shorikai, Genesis Engine",
+    "colourIdentity": "WU",
+    "weight": 19693
+  },
+  {
+    "name": "Omnath, Locus of Creation",
+    "colourIdentity": "WURG",
+    "weight": 19580
+  },
+  { "name": "Sliver Overlord", "colourIdentity": "WUBRG", "weight": 19421 },
+  { "name": "The First Sliver", "colourIdentity": "WUBRG", "weight": 19358 },
+  {
+    "name": "Go-Shintai of Life's Origin",
+    "colourIdentity": "WUBRG",
+    "weight": 19194
+  },
+  { "name": "Heliod, Sun-Crowned", "colourIdentity": "W", "weight": 19042 },
+  {
+    "name": "Jetmir, Nexus of Revels",
+    "colourIdentity": "WRG",
+    "weight": 18887
+  },
+  {
+    "name": "Raffine, Scheming Seer",
+    "colourIdentity": "WUB",
+    "weight": 18766
+  },
+  { "name": "Brago, King Eternal", "colourIdentity": "WU", "weight": 18684 },
+  {
+    "name": "Osgir, the Reconstructor",
+    "colourIdentity": "WR",
+    "weight": 18552
+  },
+  { "name": "Urza, Chief Artificer", "colourIdentity": "WUB", "weight": 18479 },
+  { "name": "Mishra, Eminent One", "colourIdentity": "UBR", "weight": 18366 },
+  { "name": "Kinnan, Bonder Prodigy", "colourIdentity": "UG", "weight": 18297 },
+  {
+    "name": "Alela, Artful Provocateur",
+    "colourIdentity": "WUB",
+    "weight": 18143
+  },
+  {
+    "name": "Narset, Enlightened Exile",
+    "colourIdentity": "WUR",
+    "weight": 18018
+  },
+  { "name": "Feather, the Redeemed", "colourIdentity": "WR", "weight": 17982 },
+  { "name": "Ghave, Guru of Spores", "colourIdentity": "WBG", "weight": 17851 },
+  {
+    "name": "Tivit, Seller of Secrets",
+    "colourIdentity": "WUB",
+    "weight": 17728
+  },
+  {
+    "name": "Morska, Undersea Sleuth",
+    "colourIdentity": "WUG",
+    "weight": 17660
+  },
+  { "name": "Xenagos, God of Revels", "colourIdentity": "RG", "weight": 17593 },
+  { "name": "Anowon, the Ruin Thief", "colourIdentity": "UB", "weight": 17458 },
+  {
+    "name": "Ezuri, Claw of Progress",
+    "colourIdentity": "UG",
+    "weight": 17381
+  },
+  {
+    "name": "Purphoros, God of the Forge",
+    "colourIdentity": "R",
+    "weight": 17249
+  },
+  { "name": "Yarok, the Desecrated", "colourIdentity": "UBG", "weight": 17192 },
+  { "name": "Zaxara, the Exemplary", "colourIdentity": "UBG", "weight": 17081 },
+  {
+    "name": "Adeline, Resplendent Cathar",
+    "colourIdentity": "W",
+    "weight": 16976
+  },
+  {
+    "name": "Sisay, Weatherlight Captain",
+    "colourIdentity": "WUBRG",
+    "weight": 16894
+  },
+  { "name": "Tovolar, Dire Overlord", "colourIdentity": "RG", "weight": 16782 },
+  { "name": "Magda, Brazen Outlaw", "colourIdentity": "R", "weight": 16647 },
+  { "name": "Greasefang, Okiba Boss", "colourIdentity": "WB", "weight": 16581 },
+  {
+    "name": "Roon of the Hidden Realm",
+    "colourIdentity": "WUG",
+    "weight": 16466
+  },
+  { "name": "Queen Marchesa", "colourIdentity": "WBR", "weight": 16392 },
+  { "name": "Tatsunari, Toad Rider", "colourIdentity": "UBG", "weight": 16275 },
+  {
+    "name": "Saruman of Many Colors",
+    "colourIdentity": "WUB",
+    "weight": 16158
+  },
+  { "name": "The Locust God", "colourIdentity": "UR", "weight": 16081 },
+  { "name": "Marneus Calgar", "colourIdentity": "WUB", "weight": 15967 },
+  {
+    "name": "Sefris of the Hidden Ways",
+    "colourIdentity": "WUB",
+    "weight": 15854
+  },
+  {
+    "name": "Arahbo, Roar of the World",
+    "colourIdentity": "WG",
+    "weight": 15786
+  },
+  { "name": "Myrkul, Lord of Bones", "colourIdentity": "WBG", "weight": 15691 },
+  { "name": "Rakdos, Lord of Riots", "colourIdentity": "BR", "weight": 15583 },
+  {
+    "name": "Aminatou, the Fateshifter",
+    "colourIdentity": "WUB",
+    "weight": 15472
+  },
+  { "name": "Kykar, Wind's Fury", "colourIdentity": "WUR", "weight": 15358 },
+  { "name": "Koma, Cosmos Serpent", "colourIdentity": "UG", "weight": 15291 },
+  { "name": "Lord Windgrace", "colourIdentity": "BRG", "weight": 15184 },
+  { "name": "Niv-Mizzet Reborn", "colourIdentity": "WUBRG", "weight": 15092 },
+  {
+    "name": "Atraxa, Grand Unifier",
+    "colourIdentity": "WUBG",
+    "weight": 14981
+  },
+  {
+    "name": "Henzie \"Toolbox\" Torre",
+    "colourIdentity": "BRG",
+    "weight": 14895
+  },
+  { "name": "Gishath, Sun's Avatar", "colourIdentity": "WRG", "weight": 14784 },
+  {
+    "name": "Ramos, Dragon Engine",
+    "colourIdentity": "WUBRG",
+    "weight": 14688
+  },
+  {
+    "name": "Najeela, the Blade-Blossom",
+    "colourIdentity": "WUBRG",
+    "weight": 14576
+  },
+  { "name": "Zur the Enchanter", "colourIdentity": "WUB", "weight": 14482 },
+  {
+    "name": "Marchesa, the Black Rose",
+    "colourIdentity": "UBR",
+    "weight": 14391
+  },
+  {
+    "name": "Tinybones, Trinket Thief",
+    "colourIdentity": "B",
+    "weight": 14296
+  },
+  {
+    "name": "Light-Paws, Emperor's Voice",
+    "colourIdentity": "W",
+    "weight": 14183
+  },
+  {
+    "name": "Kozilek, the Great Distortion",
+    "colourIdentity": "",
+    "weight": 14092
+  },
+  { "name": "Zhulodok, Void Gorger", "colourIdentity": "", "weight": 13981 },
+  {
+    "name": "Ulalek, Fused Atrocity",
+    "colourIdentity": "UBRG",
+    "weight": 13895
+  },
+  { "name": "Nadu, Winged Wisdom", "colourIdentity": "UG", "weight": 13784 },
+  { "name": "Omo, Queen of Vesuva", "colourIdentity": "UG", "weight": 13692 },
+  { "name": "Eowyn, Shieldmaiden", "colourIdentity": "WUR", "weight": 13581 },
+  {
+    "name": "Frodo, Adventurous Hobbit // Sam, Loyal Attendant",
+    "colourIdentity": "WBG",
+    "weight": 13497
+  },
+  {
+    "name": "Sauron, Lord of the Rings",
+    "colourIdentity": "UBR",
+    "weight": 13386
+  },
+  {
+    "name": "Bilbo, Birthday Celebrant",
+    "colourIdentity": "WBG",
+    "weight": 13295
+  },
+  { "name": "Tom Bombadil", "colourIdentity": "WUBRG", "weight": 13188 },
+  {
+    "name": "Voja, Jaws of the Conclave",
+    "colourIdentity": "WRG",
+    "weight": 13074
+  },
+  {
+    "name": "Ellivere of the Wild Court",
+    "colourIdentity": "WG",
+    "weight": 12996
+  },
+  {
+    "name": "Eriette of the Charmed Apple",
+    "colourIdentity": "WB",
+    "weight": 12885
+  },
+  {
+    "name": "Obeka, Splitter of Seconds",
+    "colourIdentity": "UBR",
+    "weight": 12793
+  },
+  { "name": "The Master, Multiplied", "colourIdentity": "BR", "weight": 12687 },
+  {
+    "name": "Judith, Carnage Connoisseur",
+    "colourIdentity": "BR",
+    "weight": 12596
+  },
+  {
+    "name": "Ghyrson Starn, Kelermorph",
+    "colourIdentity": "UR",
+    "weight": 12491
+  },
+  { "name": "Vren, the Relentless", "colourIdentity": "UB", "weight": 12384 },
+  {
+    "name": "Bonny Pall, Clearcutter",
+    "colourIdentity": "UG",
+    "weight": 12271
+  },
+  {
+    "name": "Bristly Bill, Spine Sower",
+    "colourIdentity": "G",
+    "weight": 12188
+  },
+  {
+    "name": "Loot, the Key to Everything",
+    "colourIdentity": "URG",
+    "weight": 12096
+  },
+  { "name": "Kellan, the Kid", "colourIdentity": "WUG", "weight": 11981 },
+  {
+    "name": "The Pride of Hull Clade",
+    "colourIdentity": "UG",
+    "weight": 11897
+  },
+  {
+    "name": "Winter, Cynical Opportunist",
+    "colourIdentity": "BG",
+    "weight": 11795
+  },
+  {
+    "name": "Zimone, Mystery Unraveler",
+    "colourIdentity": "UG",
+    "weight": 11684
+  },
+  {
+    "name": "Arabella, Abandoned Doll",
+    "colourIdentity": "WR",
+    "weight": 11591
+  },
+  { "name": "Marina Vendrell", "colourIdentity": "WUBRG", "weight": 11493 },
+  { "name": "Valgavoth, Terror Eater", "colourIdentity": "B", "weight": 11389 },
+  { "name": "The Infamous Cruelclaw", "colourIdentity": "BR", "weight": 11286 },
+  {
+    "name": "Winter, Misanthropic Guide",
+    "colourIdentity": "UBG",
+    "weight": 11178
+  },
+  {
+    "name": "Felothar, Dawn of the Abzan",
+    "colourIdentity": "WBG",
+    "weight": 11081
+  },
+  {
+    "name": "Kaito, Bane of Nightmares",
+    "colourIdentity": "UB",
+    "weight": 10984
+  },
+  {
+    "name": "Alesha, Who Laughs at Fate",
+    "colourIdentity": "WBR",
+    "weight": 10896
+  },
+  {
+    "name": "Taeko, the Patient Avalanche",
+    "colourIdentity": "UG",
+    "weight": 10791
+  },
+  {
+    "name": "Storm, Force of Nature",
+    "colourIdentity": "URG",
+    "weight": 10687
+  },
+  {
+    "name": "Captain America, First Avenger",
+    "colourIdentity": "WUR",
+    "weight": 10596
+  },
+  {
+    "name": "Iron Man, Titan of Innovation",
+    "colourIdentity": "UR",
+    "weight": 10492
+  },
+  {
+    "name": "Wolverine, Best There Is",
+    "colourIdentity": "RG",
+    "weight": 10384
+  }
+]

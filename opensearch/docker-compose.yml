@@ -35,14 +35,15 @@ services:
       - ./seed:/seed
     entrypoint: ["/bin/sh", "/seed/local_seed.sh"]
 
+  dashboard-bootstrap:
+    hostname: dashboard-bootstrap
+    image: curlimages/curl:8.7.1
+    depends_on:
+      dashboards:
+        condition: service_started
+    volumes:
+      - ./dashboards:/dashboards
+    entrypoint: ["/bin/sh", "/dashboards/bootstrap.sh"]
+
 volumes:
   opensearch-data:
-
-dashboard-bootstrap:
-  image: curlimages/curl:8.7.1
-  depends_on:
-    dashboards:
-      condition: service_started
-  volumes:
-    - ./dashboards:/dashboards
-  command: sh /dashboards/bootstrap.sh
