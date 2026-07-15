@@ -2,19 +2,35 @@
 
 set -e
 
+AUTH="admin:MyStrongPassword123!"
+BASE_URL="http://dashboards:5601"
+
 echo "Waiting for Dashboards..."
 
-until curl -s http://dashboards:5601/api/status >/dev/null
+until curl -sf \
+  -u "$AUTH" \
+  -H "osd-xsrf: true" \
+  "$BASE_URL/api/status" >/dev/null
 do
     sleep 2
 done
 
+sleep 5
+
 echo "Importing dashboard..."
 
-curl \
+RESPONSE=$(curl -s \
   -X POST \
-  http://dashboards:5601/api/saved_objects/_import?overwrite=true \
+  -u "$AUTH" \
   -H "osd-xsrf: true" \
-  --form file=@/dashboards/exports/commander-meta-dashboard.ndjson
+  --form 'file=@/dashboards/dashboards.ndjson' \
+  "$BASE_URL/api/saved_objects/_import?overwrite=true")
 
-echo "Dashboard imported!"
+echo "$RESPONSE"
+
+echo "$RESPONSE" | grep '"success":true' >/dev/null || {
+    echo "❌ Dashboard import failed"
+    exit 1
+}
+
+echo "✅ Dashboard imported successfully"
