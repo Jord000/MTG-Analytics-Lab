@@ -59,7 +59,7 @@ def generate_game(players, commanders):
 
 
 def post_game_entry(entry: GameEntryRequest):
-    url = f"{Config.GAME_API_URL}/game-entry"
+    url = f"{Config.GAME_API_URL}/game_entry"
 
     try:
         response = requests.post(
@@ -68,6 +68,12 @@ def post_game_entry(entry: GameEntryRequest):
             timeout=5,
         )
 
+        if not response.ok:
+            logger.error(
+            "API failed: status=%s body=%s",
+            response.status_code,
+            response.text
+        )
         response.raise_for_status()
 
         logger.info(
