@@ -7,7 +7,25 @@ An application to submit Magic The Gathering Commander game results to then prov
 - Docker
 - Kubernetes
 
-# Useful commands
+# Application design and overview
+
+The app consists of the following
+
+- java api to interact with the opensearch data store and simplify adding games
+- opensearch data store with bootstrap to set the index and set some seed data
+- opensearch dashboards with bootstrap to set some initial data visualisations
+- python simulator script to simulate live data being sent to the api
+- docker files to run from one simple script
+
+# Running the application
+
+The application can be ran from the root directory using the docker compose files
+
+`docker compose -d`
+
+Allow time for the opnesearch container to spin up before dependant containers can run. 
+
+# Useful api commands
 
 build the jar
 `./mvnw clean install`
@@ -18,9 +36,6 @@ run springboot
 make a get call via powershell
 `Invoke-RestMethod -Uri "http://localhost:8080/"`
 `curl "http://localhost:8080"`
-
-run local opensearch instance
-`docker compose up -d`
 
 Useful GET's and POST's using Powershell
 
