@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.opensearch.client.opensearch._types.mapping.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,8 @@ import lombok.Data;
 @RestController
 @Data
 public class GameRestController {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(GameRestController.class);
 
   private final GameQueryService gameQueryService;
   private final GameCommandService gameCommandService;
@@ -76,6 +80,12 @@ public class GameRestController {
   @PostMapping("/game_entry")
   public ResponseEntity<StoredGameEntryReference> postGameEntry(@RequestBody GameEntryRequest gameEntryRequest)
       throws IOException, GameEntryRecordFailureException {
+    LOGGER.info("POST /game_entry  player={} commander={} colors={} win={} turns={}",
+        gameEntryRequest.getPlayer(),
+        gameEntryRequest.getCommander(),
+        gameEntryRequest.getColorIdentity(),
+        gameEntryRequest.getWin(),
+        gameEntryRequest.getNumberOfTurnsPlayed());
     StoredGameEntryReference createdGameEntry = gameCommandService.createGameEntry(gameEntryRequest);
     return ResponseEntity.status(201).body(createdGameEntry);
   }
