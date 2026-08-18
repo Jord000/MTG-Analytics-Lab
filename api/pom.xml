@@ -4,15 +4,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mtganalytics</groupId>
-	<artifactId>lab</artifactId>
+	<artifactId>game-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>4.0.6</version>
 	</parent>
-	<name>lab-api</name>
-	<description>Lab API for MTG Analytics</description>
+	<name>game-api</name>
+	<description>Game API for MTG Analytics</description>
 	<url />
 	<licenses>
 		<license />

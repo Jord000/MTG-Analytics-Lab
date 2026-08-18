@@ -1,5 +1,5 @@
 module "mtg_namespace" {
-  source = "../../modules/namespace"
+  source = "../../modules/namespaces"
 
   name = "mtg-analytics"
 
@@ -17,7 +17,7 @@ module "game_api_config" {
 
   data = {
     SPRING_PROFILES_ACTIVE                   = "dev"
-    SPRING_APPLICATION_NAME                  = "lab-api"
+    SPRING_APPLICATION_NAME                  = "game-api"
     GAME_SERVICE_MTG_GAME_ENTRIES_INDEX_NAME = "mtg-game-entries"
     GAME_SERVICE_MOST_RECENT_ENTRY_AMOUNT    = "50"
   }
@@ -36,3 +36,12 @@ module "opensearch_secret" {
 }
 
 
+module "opensearch_storage" {
+  source = "../../modules/storage"
+
+  name      = "opensearch-data"
+  namespace = module.mtg_namespace.name
+
+  storage_size  = "5Gi"
+  storage_class = "standard"
+}

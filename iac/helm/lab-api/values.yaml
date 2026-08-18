@@ -1,0 +1,13 @@
+replicaCount: 1
+
+image:
+  repository: mtg-game-api
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+container:
+  port: 8080
