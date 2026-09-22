@@ -25,7 +25,7 @@ The IaC environment needs secret variables setting up to run. Create a terraform
 
 The application can be ran from the root directory using the docker compose files
 
-`docker compose -d`
+`docker compose up --build -d`
 
 Allow time for the opnesearch container to spin up before dependant containers can run. 
 

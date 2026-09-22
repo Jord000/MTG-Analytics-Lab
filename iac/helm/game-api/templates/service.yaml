@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: game-api
+  labels:
+    app: game-api
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: game-api
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.container.port }}
+      protocol: TCP

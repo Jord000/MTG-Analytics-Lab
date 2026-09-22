@@ -16,8 +16,9 @@ module "game_api_config" {
   namespace = module.mtg_namespace.name
 
   data = {
-    SPRING_PROFILES_ACTIVE                   = "dev"
-    SPRING_APPLICATION_NAME                  = "game-api"
+    OPENSEARCH_HOST                          = "opensearch"
+    OPENSEARCH_PORT                          = "9200"
+    OPENSEARCH_SCHEME                        = "http"
     GAME_SERVICE_MTG_GAME_ENTRIES_INDEX_NAME = "mtg-game-entries"
     GAME_SERVICE_MOST_RECENT_ENTRY_AMOUNT    = "50"
   }

@@ -9,7 +9,7 @@
 services:
   # open search index for game storage
   opensearch:
-    image: opensearchproject/opensearch:latest
+    image: opensearchproject/opensearch:3.8.0
     environment:
       - discovery.type=single-node
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=MyStrongPassword123!

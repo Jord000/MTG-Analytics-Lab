@@ -1,4 +1,4 @@
-package com.mtganalytics.lab;
+package com.mtganalytics;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
