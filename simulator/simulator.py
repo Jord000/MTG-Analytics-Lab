@@ -70,10 +70,8 @@ def post_game_entry(entry: GameEntryRequest):
 
         if not response.ok:
             logger.error(
-            "API failed: status=%s body=%s",
-            response.status_code,
-            response.text
-        )
+                "API failed: status=%s body=%s", response.status_code, response.text
+            )
         response.raise_for_status()
 
         logger.info(
@@ -89,18 +87,25 @@ def post_game_entry(entry: GameEntryRequest):
 
 
 def run_simulator(players, commanders):
-    interval = Config.POST_INTERVAL_SECONDS
+    interval_seconds = Config.POST_INTERVAL_SECONDS
+    games_per_interval = Config.GAMES_PER_INTERVAL
+    interval_minutes = interval_seconds / 60
 
     logger.info("Starting simulator...")
-    logger.info("Posting one 4-player game every %s seconds", interval)
+    logger.info(
+        "Generating %s 4-player game/s every %s minutes",
+        games_per_interval,
+        interval_minutes,
+    )
 
     while True:
-        entries = generate_game(players, commanders)
+        for _ in range(games_per_interval):
+            entries = generate_game(players, commanders)
 
-        for entry in entries:
-            post_game_entry(entry)
+            for entry in entries:
+                post_game_entry(entry)
 
-        time.sleep(interval)
+        time.sleep(interval_seconds)
 
 
 def main():
