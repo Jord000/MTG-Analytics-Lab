@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: mtg-analytics-lab-simulator
+  tag: latest
+  pullPolicy: IfNotPresent
+
+simulator:
+  postIntervalSeconds: 300
+  gamesPerInterval: 1
+
+gameApi:
+  url: http://game-api:8080
+
+resources:
+  requests:
+    cpu: "50m"
+    memory: "64Mi"
+  limits:
+    cpu: "250m"
+    memory: "128Mi"

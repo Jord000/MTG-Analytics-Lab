@@ -1,0 +1,6 @@
+apiVersion: v2
+name: opensearch-dashboards
+description: OpenSearch Dashboards for the MTG Analytics Lab
+type: application
+version: 1.0.0
+appVersion: "3.8.0"

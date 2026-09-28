@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simulator
+  labels:
+    app: simulator
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: simulator
+  template:
+    metadata:
+      labels:
+        app: simulator
+    spec:
+      containers:
+        - name: simulator
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GAME_API_URL
+              value: {{ .Values.gameApi.url | quote }}
+            - name: POST_INTERVAL_SECONDS
+              value: {{ .Values.simulator.postIntervalSeconds | quote }}
+            - name: GAMES_PER_INTERVAL
+              value: {{ .Values.simulator.gamesPerInterval | quote }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
