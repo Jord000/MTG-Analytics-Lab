@@ -1,0 +1,7 @@
+apiVersion: v2
+name: game-api
+description: MTG Analytics Java API
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+icon: https://static.wikia.nocookie.net/pixar/images/5/59/Heimlich_screaming.jpg/revision/latest?cb=20170515224516

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opensearch-seed-data
+data:
+  testgames.ndjson: |-
+{{ .Files.Get "seed/testgames.ndjson" | nindent 4 }}

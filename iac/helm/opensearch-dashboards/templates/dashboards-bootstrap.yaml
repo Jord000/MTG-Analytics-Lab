@@ -1,0 +1,96 @@
+{{- if .Values.bootstrap.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "opensearch-dashboards.fullname" . }}-bootstrap
+  labels:
+    {{- include "opensearch-dashboards.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "10"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 6
+  template:
+    metadata:
+      labels:
+        {{- include "opensearch-dashboards.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+
+      containers:
+        - name: dashboard-bootstrap
+          image: "{{ .Values.bootstrap.image.repository }}:{{ .Values.bootstrap.image.tag }}"
+          imagePullPolicy: {{ .Values.bootstrap.image.pullPolicy }}
+
+          env:
+            - name: DASHBOARDS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.bootstrap.secretName }}
+                  key: username
+
+            - name: DASHBOARDS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.bootstrap.secretName }}
+                  key: password
+
+            - name: DASHBOARDS_URL
+              value: "http://{{ include "opensearch-dashboards.fullname" . }}:{{ .Values.bootstrap.dashboards.servicePort }}"
+
+            - name: WAIT_SECONDS
+              value: {{ .Values.bootstrap.dashboards.waitSeconds | quote }}
+
+            - name: INITIAL_DELAY_SECONDS
+              value: {{ .Values.bootstrap.dashboards.initialDelaySeconds | quote }}
+
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+
+              echo "Waiting for OpenSearch Dashboards..."
+
+              sleep "$INITIAL_DELAY_SECONDS"
+
+              until curl -sf \
+                -u "$DASHBOARDS_USERNAME:$DASHBOARDS_PASSWORD" \
+                -H "osd-xsrf: true" \
+                "$DASHBOARDS_URL/api/status" >/dev/null
+              do
+                echo "Dashboards not ready yet..."
+                sleep "$WAIT_SECONDS"
+              done
+
+              echo "OpenSearch Dashboards is ready."
+
+              echo "Importing saved objects..."
+
+              RESPONSE=$(curl -s \
+                -X POST \
+                -u "$DASHBOARDS_USERNAME:$DASHBOARDS_PASSWORD" \
+                -H "osd-xsrf: true" \
+                --form 'file=@/dashboards/dashboards.ndjson' \
+                "$DASHBOARDS_URL/api/saved_objects/_import?overwrite=true")
+
+              echo "$RESPONSE"
+
+              echo "$RESPONSE" | grep '"success":true' >/dev/null || {
+                echo "Dashboard import failed"
+                exit 1
+              }
+
+              echo "Dashboard import completed successfully."
+
+          volumeMounts:
+            - name: dashboards
+              mountPath: /dashboards
+              readOnly: true
+
+      volumes:
+        - name: dashboards
+          configMap:
+            name: {{ include "opensearch-dashboards.fullname" . }}-dashboards
+{{- end }}

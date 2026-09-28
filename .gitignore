@@ -12,12 +12,6 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -30,6 +24,36 @@ build/
 
 ### VS Code ###
 .vscode/
+.idea/
+*.iml
 
 ### python ###
 __pycache__
+*.py[cod]
+
+### OpenTofu / terraform ###
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfplan
+plan.out
+.tofu/
+
+
+### misc ###
+.DS_Store
+Thumbs.db
+*.log
+
+### Environment variables ###
+.env
+.env.*
+

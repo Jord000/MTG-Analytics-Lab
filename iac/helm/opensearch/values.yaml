@@ -1,0 +1,241 @@
+global:
+  dockerRegistry: ""
+
+image:
+  repository: opensearchproject/opensearch
+  tag: "3.8.0"
+  pullPolicy: IfNotPresent
+
+fullnameOverride: "opensearch"
+masterService: "opensearch"
+
+clusterName: "mtg-analytics"
+nodeGroup: "master"
+
+singleNode: true
+replicas: 1
+
+roles:
+  - master
+  - ingest
+  - data
+  - remote_cluster_client
+
+opensearchJavaOpts: "-Xms512m -Xmx512m"
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "512Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"
+
+networkHost: "0.0.0.0"
+protocol: http
+httpPort: 9200
+transportPort: 9300
+metricsPort: 9600
+
+service:
+  type: ClusterIP
+  headless:
+    annotations: {}
+serviceMonitor:
+  enabled: false
+# -----------------------------------------------------------------------------
+# Persistence
+#
+# OpenTofu creates the PVC. Helm does not create a volumeClaimTemplate.
+# -----------------------------------------------------------------------------
+
+persistence:
+  enabled: false
+  labels:
+    enabled: false
+    additionalLabels: {}
+  annotations: {}
+  accessModes:
+    - ReadWriteOnce
+  size: 2Gi
+  storageClass: ""
+
+extraVolumes:
+  - name: opensearch-data
+    persistentVolumeClaim:
+      claimName: opensearch-data
+
+extraVolumeMounts:
+  - name: opensearch-data
+    mountPath: /usr/share/opensearch/data
+
+extraInitContainers:
+  - name: fsgroup-volume
+    image: busybox:latest
+    command: ["sh", "-c"]
+    args:
+      - chown -R 1000:1000 /usr/share/opensearch/data
+    securityContext:
+      runAsUser: 0
+    resources:
+      requests:
+        cpu: "10m"
+        memory: "16Mi"
+      limits:
+        cpu: "100m"
+        memory: "64Mi"
+    volumeMounts:
+      - name: opensearch-data
+        mountPath: /usr/share/opensearch/data
+
+# -----------------------------------------------------------------------------
+# OpenSearch configuration
+# -----------------------------------------------------------------------------
+
+config:
+  opensearch.yml: |
+    cluster.name: mtg-analytics
+    network.host: 0.0.0.0
+    discovery.type: single-node
+
+# -----------------------------------------------------------------------------
+# Security
+# -----------------------------------------------------------------------------
+
+securityConfig:
+  enabled: true
+  path: /usr/share/opensearch/config/opensearch-security
+  config:
+    data: {}
+    dataComplete: false
+    securityConfigSecret: ""
+  actionGroupsSecret: ""
+  configSecret: ""
+  internalUsersSecret: ""
+  rolesSecret: ""
+  rolesMappingSecret: ""
+  tenantsSecret: ""
+
+extraEnvs:
+  - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: opensearch-credentials
+        key: password
+  - name: plugins.security.ssl.http.enabled
+    value: "false"
+
+# -----------------------------------------------------------------------------
+# RBAC
+# -----------------------------------------------------------------------------
+
+rbac:
+  create: true
+  serviceAccountName: ""
+  automountServiceAccountToken: false
+
+# -----------------------------------------------------------------------------
+# Sysctl
+# -----------------------------------------------------------------------------
+
+sysctl:
+  enabled: false
+
+sysctlInit:
+  enabled: false
+
+sysctlVmMaxMapCount: 262144
+
+# -----------------------------------------------------------------------------
+# Pod / scheduling defaults
+# -----------------------------------------------------------------------------
+
+podManagementPolicy: Parallel
+updateStrategy: RollingUpdate
+
+podAnnotations: {}
+
+podSecurityContext: {}
+securityContext: {}
+podSecurityPolicy:
+  name: ""
+schedulerName: ""
+
+fsGroup: ""
+
+tolerations: []
+nodeSelector: {}
+
+antiAffinity: soft
+antiAffinityTopologyKey: kubernetes.io/hostname
+
+customAntiAffinity: {}
+podAffinity: {}
+nodeAffinity: {}
+
+topologySpreadConstraints: []
+
+priorityClassName: ""
+
+terminationGracePeriod: 120
+
+# -----------------------------------------------------------------------------
+# Probes
+# -----------------------------------------------------------------------------
+
+readinessProbe:
+  tcpSocket:
+    port: 9200
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+livenessProbe:
+  tcpSocket:
+    port: 9200
+  initialDelaySeconds: 60
+  periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+startupProbe:
+  tcpSocket:
+    port: 9200
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+  successThreshold: 1
+  
+# -----------------------------------------------------------------------------
+# Optional features
+# -----------------------------------------------------------------------------
+
+secretMounts: []
+imagePullSecrets: []
+
+enableServiceLinks: true
+
+initResources: {}
+sidecarResources: {}
+
+masterTerminationFix: false
+
+keystore: []
+
+plugins:
+  enabled: false
+  installList: []
+  removeList: []
+
+extraContainers: []
+envFrom: []
+opensearchLifecycle: {}
+lifecycle: {}
+networkPolicy:
+  create: false
+ingress:
+  enabled: false

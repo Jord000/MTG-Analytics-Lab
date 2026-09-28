@@ -1,0 +1,30 @@
+replicaCount: 1
+
+image:
+  repository: opensearchproject/opensearch-dashboards
+  tag: "3.8.0"
+  pullPolicy: IfNotPresent
+
+opensearch:
+  hosts: '["http://opensearch:9200"]'
+
+service:
+  type: ClusterIP
+  port: 5601
+
+bootstrap:
+  enabled: true
+
+  image:
+    repository: curlimages/curl
+    tag: "8.7.1"
+    pullPolicy: IfNotPresent
+
+  secretName: opensearch-credentials
+
+  dashboards:
+    servicePort: 5601
+    waitSeconds: 2
+    initialDelaySeconds: 5
+
+resources: {}

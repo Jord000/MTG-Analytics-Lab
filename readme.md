@@ -18,10 +18,14 @@ The app consists of the following
 - docker files to run from one simple script
 
 # Running the application
+The IaC environment needs secret variables setting up to run. Create a terraform.tfvars file in iac\environments\local\ and add the following replacing the password value
+`opensearch_admin_password = "MyStrongPassword123!"`
+
+# Running the application
 
 The application can be ran from the root directory using the docker compose files
 
-`docker compose -d`
+`docker compose up --build -d`
 
 Allow time for the opnesearch container to spin up before dependant containers can run. 
 

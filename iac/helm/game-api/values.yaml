@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: mtg-analytics-lab-game-api
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+container:
+  port: 8080
+
+config:
+  configMapName: game-api-config
+  secretName: opensearch-credentials

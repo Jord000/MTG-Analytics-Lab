@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "opensearch-dashboards.fullname" . }}-dashboards
+  labels:
+    {{- include "opensearch-dashboards.labels" . | nindent 4 }}
+data:
+  dashboards.ndjson: |
+{{ .Files.Get "dashboard_templates/dashboards.ndjson" | indent 4 }}
